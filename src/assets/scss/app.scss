@@ -1,0 +1,12 @@
+@import "./vars";
+@import "./mixins";
+@import "./modules";
+@import "./general";
+
+
+body {
+	background-color: "#fff";
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
