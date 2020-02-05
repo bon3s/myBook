@@ -189,8 +189,8 @@ export const RemoveButton = styled(Button)`
     padding: 0;
     margin: 36px 0 0;
     i {
-        width: 8px;
-        height: 8px;
+        width: 16px;
+        height: 16px;
         background: url(${IconRemoveGray}) no-repeat;
         background-size: cover;
     }

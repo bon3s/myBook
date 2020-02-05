@@ -16,7 +16,8 @@ export const AddContactItemStyles = styled(Button)`
     outline: none;
     box-shadow: none;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
+    min-height: 150px;
     .content-wrapper {
         display: flex;
         align-items: center;
@@ -53,5 +54,6 @@ export const AddContactItemStyles = styled(Button)`
         background-color: ${theme.colors.white}!important;
         outline: none !important;
         box-shadow: none !important;
+        border: 1px dashed ${theme.colors.primary} !important;
     }
 `;

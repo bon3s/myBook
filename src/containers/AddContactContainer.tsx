@@ -5,8 +5,16 @@ import { RouterProps } from 'react-router';
 interface Props extends RouterProps {}
 
 class AddContactContainer extends Component<Props> {
+    handleSaveClick = () => {
+        console.log('save');
+    };
     render() {
-        return <AddContactScreen history={this.props.history} />;
+        return (
+            <AddContactScreen
+                handleSaveClick={this.handleSaveClick}
+                history={this.props.history}
+            />
+        );
     }
 }
 

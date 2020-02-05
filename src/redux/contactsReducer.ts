@@ -1,15 +1,27 @@
-import { ADD_CONTACT } from './contactsActions';
+import { ADD_CONTACT, REMOVE_CONTACT } from './contactsActions';
 import { ContactType } from '../types/ContactType';
 import { AnyAction } from 'redux';
 
 export interface State {
-    contacts: ContactType[];
+    readonly contacts: ContactType[];
 }
 
-const initState = {
-    contacts: [],
+const initState: State = {
+    contacts: [
+        {
+            id: 'first',
+            name: 'pero',
+            email: 'pero@gmail.com',
+            numbers: [
+                {
+                    label: 'mobile',
+                    number: '0911531334',
+                },
+            ],
+        },
+    ],
 };
-const contactReducer = (state: State = initState, action: AnyAction) => {
+const contactsReducer = (state: State = initState, action: AnyAction) => {
     switch (action.type) {
         case ADD_CONTACT:
             return { ...state, contacts: [...state.contacts, action.value] };
@@ -23,9 +35,11 @@ const contactReducer = (state: State = initState, action: AnyAction) => {
             });
             return {
                 ...state,
-                selectedBulkyItems: newArray,
+                contacts: newArray,
             };
+        default:
+            return state;
     }
 };
 
-export default contactReducer;
+export default contactsReducer;

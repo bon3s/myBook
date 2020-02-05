@@ -1,5 +1,5 @@
 import { State as ContactState } from './contactsReducer';
 
-export interface AppState {
-    readonly contact: ContactState;
+export default interface AppState {
+    readonly contacts: ContactState;
 }

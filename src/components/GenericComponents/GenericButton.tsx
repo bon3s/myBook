@@ -4,6 +4,7 @@ import { theme } from '../Theme/theme';
 import React from 'react';
 
 interface Props {
+    handleClick: () => void;
     backgroundColor: string;
     buttonText: string;
 }
@@ -11,8 +12,9 @@ interface Props {
 const GenericButton = (props: Props) => {
     return (
         <GenericButtonStyles
-            backgroundColor={props.backgroundColor}
-            buttonText={props.buttonText}>
+            onClick={props.handleClick}
+            backgroundcolor={props.backgroundColor}
+            buttontext={props.buttonText}>
             <p className="button-label">{props.buttonText}</p>
         </GenericButtonStyles>
     );

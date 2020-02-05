@@ -24,16 +24,25 @@ const HomeScreen = (props: Props) => {
                             <Col lg={3} md={6} sm={12}>
                                 <AddContactItem history={props.history} />
                             </Col>
-                            {props.contacts.map(item => {
-                                return (
-                                    <Col lg={3} md={6} sm={12}>
-                                        <ContactItem
-                                            contactData={item}
-                                            favorite={false}
-                                        />
-                                    </Col>
-                                );
-                            })}
+                            {props.contacts ? (
+                                props.contacts.map(item => {
+                                    return (
+                                        <Col
+                                            key={item.id}
+                                            lg={3}
+                                            md={6}
+                                            sm={12}>
+                                            <ContactItem
+                                                key={item.id}
+                                                contactData={item}
+                                                favorite={false}
+                                            />
+                                        </Col>
+                                    );
+                                })
+                            ) : (
+                                <div></div>
+                            )}
                         </Row>
                     </Container>
                 </div>

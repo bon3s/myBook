@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import React, { useState, SyntheticEvent } from 'react';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import {
     AddContactScreenStyles,
     ImageUploadButton,
@@ -12,10 +12,54 @@ import { RouterProps } from 'react-router';
 import { CustomFormGroup } from './styles/AddContactScreenStyles';
 import GenericButton from '../../components/GenericComponents/GenericButton';
 import { theme } from '../../components/Theme/theme';
+import uuid from 'uuid';
 
-interface Props extends RouterProps {}
+interface Props extends RouterProps {
+    handleSaveClick: (name: string, email: string) => void;
+}
 
 export const AddContactScreen = (props: Props) => {
+    interface renderItems {
+        id: string;
+        label: string;
+        number: string;
+    }
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const initialState: renderItems[] = [{ id: uuid(), label: '', number: '' }];
+
+    const [toRender, setToRender] = useState(initialState);
+
+    const addCustomInputRow = () => {
+        const newItem = { id: uuid(), label: '', number: '' };
+        setToRender([...toRender, newItem]);
+    };
+
+    const removeCustomInputRow = (id: string) => {
+        const newRender = toRender.filter(item => item.id !== id);
+        setToRender(newRender);
+    };
+
+    const handleCancelClick = () => {
+        setName('');
+        setEmail('');
+        setToRender(initialState);
+        props.history.goBack();
+    };
+
+    const updateNumber = (index: number) => (e: any) => {
+        let newArr = [...toRender];
+        newArr[index].number = e.target.value;
+        setToRender(newArr);
+    };
+
+    const updateLabel = (index: number) => (e: any) => {
+        let newArr = [...toRender];
+        newArr[index].label = e.target.value;
+        setToRender(newArr);
+    };
+
     return (
         <ScreenWrapper history={props.history}>
             <AddContactScreenStyles>
@@ -44,7 +88,6 @@ export const AddContactScreen = (props: Props) => {
                                 <Form className={'addContactForm'}>
                                     <Form.Group
                                         id={'addContactNameInput'}
-                                        controlId="addContactNameInput"
                                         bsPrefix={'form-group addContactName'}>
                                         <div className="label-wrapper name">
                                             <i></i>
@@ -53,11 +96,15 @@ export const AddContactScreen = (props: Props) => {
                                         <Form.Control
                                             type="text"
                                             placeholder="Name"
+                                            value={name}
+                                            onChange={(e: SyntheticEvent) => {
+                                                let element = e.target as HTMLInputElement;
+                                                setName(element.value);
+                                            }}
                                         />
                                     </Form.Group>
                                     <Form.Group
                                         id={'addContactEmailInput'}
-                                        controlId="addContactEmailInput"
                                         bsPrefix={'form-group addContactEmail'}>
                                         <div className="label-wrapper email">
                                             <i></i>
@@ -66,11 +113,15 @@ export const AddContactScreen = (props: Props) => {
                                         <Form.Control
                                             type="email"
                                             placeholder="Email"
+                                            value={email}
+                                            onChange={(e: SyntheticEvent) => {
+                                                let element = e.target as HTMLInputElement;
+                                                setEmail(element.value);
+                                            }}
                                         />
                                     </Form.Group>
                                     <CustomFormGroup
                                         id={'addContactNumbersInput'}
-                                        controlId="addContactNumbers"
                                         bsPrefix={
                                             'form-group addContactNumbers'
                                         }>
@@ -79,60 +130,71 @@ export const AddContactScreen = (props: Props) => {
                                             <Form.Label>Numbers</Form.Label>
                                         </div>
                                         <div className="multiple-inputs">
-                                            <Form.Row>
-                                                <Col md={6} sm={12}>
-                                                    <Form.Control
-                                                        bsPrefix={
-                                                            'form-control label-input'
-                                                        }
-                                                        placeholder="Number"
-                                                    />
-                                                </Col>
-                                                <Col md={5} sm={12}>
-                                                    <Form.Control
-                                                        bsPrefix={
-                                                            'form-control number-input'
-                                                        }
-                                                        className={
-                                                            'number-input'
-                                                        }
-                                                        placeholder="Cell"
-                                                    />
-                                                </Col>
-                                                <Col md={1} sm={12}>
-                                                    <RemoveButton>
-                                                        <i></i>
-                                                    </RemoveButton>
-                                                </Col>
-                                            </Form.Row>
-                                            <Form.Row>
-                                                <Col md={6} sm={12}>
-                                                    <Form.Control
-                                                        bsPrefix={
-                                                            'form-control label-input'
-                                                        }
-                                                        placeholder="Number"
-                                                    />
-                                                </Col>
-                                                <Col md={5} sm={12}>
-                                                    <Form.Control
-                                                        bsPrefix={
-                                                            'form-control number-input'
-                                                        }
-                                                        className={
-                                                            'number-input'
-                                                        }
-                                                        placeholder="Cell"
-                                                    />
-                                                </Col>
-                                                <Col md={1} sm={12}>
-                                                    <RemoveButton>
-                                                        <i></i>
-                                                    </RemoveButton>
-                                                </Col>
-                                            </Form.Row>
+                                            {toRender.length > 0 ? (
+                                                toRender.map(
+                                                    (
+                                                        item: {
+                                                            id: string;
+                                                            label: string;
+                                                            number: string;
+                                                        },
+                                                        index
+                                                    ) => (
+                                                        <Form.Row
+                                                            id={item.id}
+                                                            key={item.id}>
+                                                            <Col md={6} sm={12}>
+                                                                <Form.Control
+                                                                    bsPrefix={
+                                                                        'form-control label-input'
+                                                                    }
+                                                                    id={
+                                                                        'label-' +
+                                                                        item.id
+                                                                    }
+                                                                    onChange={updateLabel(
+                                                                        index
+                                                                    )}
+                                                                    placeholder="Label"
+                                                                />
+                                                            </Col>
+                                                            <Col md={5} sm={12}>
+                                                                <Form.Control
+                                                                    bsPrefix={
+                                                                        'form-control number-input'
+                                                                    }
+                                                                    id={
+                                                                        'number-' +
+                                                                        item.id
+                                                                    }
+                                                                    onChange={updateNumber(
+                                                                        index
+                                                                    )}
+                                                                    className={
+                                                                        'number-input'
+                                                                    }
+                                                                    placeholder="Number"
+                                                                />
+                                                            </Col>
+                                                            <Col md={1} sm={12}>
+                                                                <RemoveButton
+                                                                    onClick={() =>
+                                                                        removeCustomInputRow(
+                                                                            item.id
+                                                                        )
+                                                                    }>
+                                                                    <i></i>
+                                                                </RemoveButton>
+                                                            </Col>
+                                                        </Form.Row>
+                                                    )
+                                                )
+                                            ) : (
+                                                <div></div>
+                                            )}
                                             <div className="addMoreInputsWrapper">
-                                                <AddButton>
+                                                <AddButton
+                                                    onClick={addCustomInputRow}>
                                                     <div className="icon-wrapper">
                                                         <i></i>
                                                     </div>
@@ -142,12 +204,18 @@ export const AddContactScreen = (props: Props) => {
                                         </div>
                                         <div className="form-footer">
                                             <GenericButton
+                                                handleClick={() =>
+                                                    handleCancelClick
+                                                }
                                                 backgroundColor={
                                                     theme.colors.gray3
                                                 }
                                                 buttonText={'Cancel'}
                                             />
                                             <GenericButton
+                                                handleClick={() =>
+                                                    props.handleSaveClick
+                                                }
                                                 backgroundColor={
                                                     theme.colors.primary
                                                 }

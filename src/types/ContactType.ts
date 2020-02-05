@@ -6,7 +6,7 @@ export interface ContactType {
     numbers: [
         {
             label: string;
-            number: number;
+            number: string;
         }
     ];
 }
