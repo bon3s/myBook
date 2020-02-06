@@ -10,7 +10,7 @@ import IconRemoveGray from '../../../assets/img/icons/icon_remove_gray.svg';
 import IconAdd from '../../../assets/img/icons/icon_add.svg';
 import { Form } from 'react-bootstrap';
 
-export const AddContactScreenStyles = styled.div`
+export const EditContactScreenStyles = styled.div`
     padding: 60px 0 78px;
     .upload-wrapper {
         display: flex;
@@ -23,8 +23,10 @@ export const AddContactScreenStyles = styled.div`
     .form-wrapper {
         padding-top: 39px;
         .form-toolbar {
-            padding: 0 0 36px 12px;
+            padding: 0 12px 36px 12px;
             border-bottom: 1px solid ${theme.colors.primary};
+            display: flex;
+            justify-content: space-between;
         }
 
         .addContactForm {

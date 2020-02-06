@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 import { AddContactScreen } from '../screens/AddContactScreen/AddContactScreen';
 import { RouterProps } from 'react-router';
-
-interface Props extends RouterProps {}
+import { ContactType } from '../types/ContactType';
+import { Dispatch } from 'redux';
+import { addContact } from '../redux/contactsActions';
+import { connect } from 'react-redux';
+import AppState from '../redux/AppState';
+interface Props extends RouterProps {
+    dispatch: Dispatch;
+}
 
 class AddContactContainer extends Component<Props> {
-    handleSaveClick = () => {
-        console.log('save');
+    handleSaveClick = (contactItem: ContactType) => {
+        this.props.dispatch(addContact(contactItem));
+        this.props.history.push('/');
     };
+
     render() {
         return (
             <AddContactScreen
@@ -18,4 +26,8 @@ class AddContactContainer extends Component<Props> {
     }
 }
 
-export default AddContactContainer;
+const mapStateToProps = (state: AppState) => ({
+    contact: state.contacts.contacts,
+});
+
+export default connect(mapStateToProps)(AddContactContainer);

@@ -10,8 +10,9 @@ import { ContactType } from '../../types/ContactType';
 
 interface Props extends RouterProps {
     contacts: ContactType[];
+    handleDeleteClick: (item: ContactType) => void;
+    handleEditClick: (item: ContactType) => void;
 }
-interface State {}
 
 const HomeScreen = (props: Props) => {
     return (
@@ -33,6 +34,12 @@ const HomeScreen = (props: Props) => {
                                             md={6}
                                             sm={12}>
                                             <ContactItem
+                                                handleEditClick={
+                                                    props.handleEditClick
+                                                }
+                                                handleDeleteClick={
+                                                    props.handleDeleteClick
+                                                }
                                                 key={item.id}
                                                 contactData={item}
                                                 favorite={false}

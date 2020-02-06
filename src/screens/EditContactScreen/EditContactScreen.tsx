@@ -1,32 +1,37 @@
 import React, { useState, SyntheticEvent } from 'react';
-import { Container, Row, Col, Form } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import {
-    AddContactScreenStyles,
+    EditContactScreenStyles,
     ImageUploadButton,
     BackButton,
     RemoveButton,
     AddButton,
-} from './styles/AddContactScreenStyles';
+} from './styles/EditContactScreenStyles';
 import ScreenWrapper from '../ScreenWrapper';
 import { RouterProps } from 'react-router';
-import { CustomFormGroup } from './styles/AddContactScreenStyles';
+import { CustomFormGroup } from './styles/EditContactScreenStyles';
 import GenericButton from '../../components/GenericComponents/GenericButton';
 import { theme } from '../../components/Theme/theme';
 import uuid from 'uuid';
 import { ContactType } from '../../types/ContactType';
 import { CustomFieldsType } from '../../types/CustomFieldsType';
+import IconDelete from '../../assets/img/icons/icon_delete.svg';
 
 interface Props extends RouterProps {
     handleSaveClick: (item: ContactType) => void;
+    handleDeleteClick: (item: ContactType) => void;
+    itemToEdit: ContactType;
 }
 
-export const AddContactScreen = (props: Props) => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [image, setImage] = useState('');
-    const initialState: CustomFieldsType[] = [
-        { id: uuid(), label: '', number: '' },
-    ];
+export const EditContactScreen = (props: Props) => {
+    const [name, setName] = useState(props.itemToEdit.name);
+    const [email, setEmail] = useState(props.itemToEdit.email);
+    const [image, setImage] = useState(props.itemToEdit.image);
+    const initialState: CustomFieldsType[] = props.itemToEdit.numbers.map(
+        item => {
+            return { id: item.id, label: item.label, number: item.number };
+        }
+    );
 
     const [toRender, setToRender] = useState(initialState);
 
@@ -66,14 +71,13 @@ export const AddContactScreen = (props: Props) => {
 
     const handleSaveClick = () => {
         if (
-            image !== '' &&
             name !== '' &&
             email !== '' &&
             toRender.length > 0 &&
             toRender[0].label !== '' &&
             toRender[0].number !== ''
         ) {
-            const id = uuid();
+            const id = props.itemToEdit.id;
             const contactItem = {
                 id: id,
                 name: name,
@@ -87,7 +91,7 @@ export const AddContactScreen = (props: Props) => {
 
     return (
         <ScreenWrapper history={props.history}>
-            <AddContactScreenStyles>
+            <EditContactScreenStyles>
                 <Container>
                     <Row>
                         <Col
@@ -127,6 +131,16 @@ export const AddContactScreen = (props: Props) => {
                                         onClick={() => props.history.goBack()}>
                                         <i></i>
                                     </BackButton>
+                                    <Button
+                                        className="delete"
+                                        onClick={(e: SyntheticEvent) => {
+                                            e.preventDefault();
+                                            props.handleDeleteClick(
+                                                props.itemToEdit
+                                            );
+                                        }}>
+                                        <img src={IconDelete} alt="delete" />
+                                    </Button>
                                 </div>
                                 <Form className={'addContactForm'}>
                                     <Form.Group
@@ -199,6 +213,9 @@ export const AddContactScreen = (props: Props) => {
                                                                         index
                                                                     )}
                                                                     placeholder="Label"
+                                                                    value={
+                                                                        item.label
+                                                                    }
                                                                 />
                                                             </Col>
                                                             <Col md={5} sm={12}>
@@ -217,6 +234,9 @@ export const AddContactScreen = (props: Props) => {
                                                                         'number-input'
                                                                     }
                                                                     placeholder="Number"
+                                                                    value={
+                                                                        item.number
+                                                                    }
                                                                 />
                                                             </Col>
                                                             <Col md={1} sm={12}>
@@ -271,7 +291,7 @@ export const AddContactScreen = (props: Props) => {
                         </Col>
                     </Row>
                 </Container>
-            </AddContactScreenStyles>
+            </EditContactScreenStyles>
         </ScreenWrapper>
     );
 };

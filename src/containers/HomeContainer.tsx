@@ -5,6 +5,7 @@ import AppState from '../redux/AppState';
 import { ContactType } from '../types/ContactType';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { removeContact } from '../redux/contactsActions';
 
 interface Props extends RouterProps {
     contacts: ContactType[];
@@ -16,9 +17,25 @@ class HomeContainer extends Component<Props> {
     //     super(props);
     // }
 
+    handleDeleteClick = (item: ContactType) => {
+        window.URL.revokeObjectURL(item.image);
+        this.props.dispatch(removeContact(item.id));
+    };
+
+    handleEditClick = (item: ContactType) => {
+        this.props.history.push({
+            pathname: '/editContact',
+            state: {
+                itemToEdit: JSON.stringify(item),
+            },
+        });
+    };
+
     public render() {
         return (
             <HomeScreen
+                handleEditClick={this.handleEditClick}
+                handleDeleteClick={this.handleDeleteClick}
                 contacts={this.props.contacts}
                 history={this.props.history}
             />

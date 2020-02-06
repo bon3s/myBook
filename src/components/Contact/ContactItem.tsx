@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import { ContactItemStyle } from './styles/ContactItemStyles';
 import IconHeartEmpty from '../../assets/img/icons/icon_heart_empty.svg';
 import IconHeartFull from '../../assets/img/icons/icon_heart_full.svg';
@@ -10,6 +10,8 @@ import { ContactType } from '../../types/ContactType';
 interface Props {
     favorite: boolean;
     contactData: ContactType;
+    handleDeleteClick: (item: ContactType) => void;
+    handleEditClick: (item: ContactType) => void;
 }
 
 export const ContactItem = (props: Props) => {
@@ -23,15 +25,25 @@ export const ContactItem = (props: Props) => {
                 )}
             </Button>
             <div className="edit-wrapper">
-                <Button className="edit">
+                <Button
+                    className="edit"
+                    onClick={(e: SyntheticEvent) => {
+                        e.preventDefault();
+                        props.handleEditClick(props.contactData);
+                    }}>
                     <img src={IconEdit} alt="edit" />
                 </Button>
-                <Button className="delete">
+                <Button
+                    className="delete"
+                    onClick={(e: SyntheticEvent) => {
+                        e.preventDefault();
+                        props.handleDeleteClick(props.contactData);
+                    }}>
                     <img src={IconDelete} alt="delete" />
                 </Button>
             </div>
             <div className="image-wrapper">
-                <img src="https://loremflickr.com/60/60/girl" alt="" />
+                <img src={props.contactData.image} alt="" />
             </div>
             <div className="info-wrapper">
                 <h3>{props.contactData.name}</h3>

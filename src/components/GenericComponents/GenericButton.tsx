@@ -22,7 +22,7 @@ const GenericButton = (props: Props) => {
 
 const GenericButtonStyles = styled(Button)`
     && {
-        background: ${props => props.backgroundColor};
+        background: ${props => props.backgroundcolor};
         border-radius: 29px;
         width: 160px;
         display: flex;
@@ -49,7 +49,7 @@ const GenericButtonStyles = styled(Button)`
         &:hover,
         &:active,
         &:focus {
-            background: ${props => props.backgroundColor}!important;
+            background: ${props => props.backgroundcolor}!important;
             border: none !important;
             outline: none !important;
             box-shadow: none !important;

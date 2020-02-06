@@ -1,4 +1,4 @@
-import { ADD_CONTACT, REMOVE_CONTACT } from './contactsActions';
+import { ADD_CONTACT, REMOVE_CONTACT, UPDATE_CONTACT } from './contactsActions';
 import { ContactType } from '../types/ContactType';
 import { AnyAction } from 'redux';
 
@@ -7,35 +7,26 @@ export interface State {
 }
 
 const initState: State = {
-    contacts: [
-        {
-            id: 'first',
-            name: 'pero',
-            email: 'pero@gmail.com',
-            numbers: [
-                {
-                    label: 'mobile',
-                    number: '0911531334',
-                },
-            ],
-        },
-    ],
+    contacts: [],
 };
 const contactsReducer = (state: State = initState, action: AnyAction) => {
     switch (action.type) {
         case ADD_CONTACT:
             return { ...state, contacts: [...state.contacts, action.value] };
         case REMOVE_CONTACT:
-            const newArray = state.contacts.filter(item => {
-                if (item.id === action.value) {
-                    return false;
-                } else {
-                    return true;
-                }
-            });
+            const newArray = state.contacts.filter(item =>
+                item.id === action.value ? false : true
+            );
             return {
                 ...state,
                 contacts: newArray,
+            };
+        case UPDATE_CONTACT:
+            return {
+                ...state,
+                contacts: state.contacts.map(item =>
+                    item.id === action.value.id ? action.value : item
+                ),
             };
         default:
             return state;
