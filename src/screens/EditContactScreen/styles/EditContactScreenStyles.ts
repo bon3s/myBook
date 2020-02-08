@@ -20,6 +20,7 @@ export const EditContactScreenStyles = styled.div`
         position: relative;
         cursor: pointer;
     }
+
     .form-wrapper {
         padding-top: 39px;
         .form-toolbar {
@@ -27,6 +28,23 @@ export const EditContactScreenStyles = styled.div`
             border-bottom: 1px solid ${theme.colors.primary};
             display: flex;
             justify-content: space-between;
+
+            .delete {
+                background: transparent !important;
+                outline: none !important;
+                box-shadow: none !important;
+                border: none !important;
+                border-radius: 0 !important;
+                &:hover,
+                &:focus,
+                &:active {
+                    background: transparent !important;
+                    outline: none !important;
+                    box-shadow: none !important;
+                    border: none !important;
+                    border-radius: 0 !important;
+                }
+            }
         }
 
         .addContactForm {

@@ -55,7 +55,6 @@ export const AddContactScreen = (props: Props) => {
         const file = event.target.files[0];
         const localImageUrl = window.URL.createObjectURL(file);
         setImage(localImageUrl);
-        console.log(image);
     };
 
     const updateLabel = (index: number) => (e: any) => {
@@ -79,8 +78,10 @@ export const AddContactScreen = (props: Props) => {
                 name: name,
                 email: email,
                 image: image,
+                favorite: false,
                 numbers: toRender,
             };
+
             props.handleSaveClick(contactItem);
         }
     };

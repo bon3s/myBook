@@ -5,5 +5,6 @@ export interface ContactType {
     name: string;
     email: string;
     image: string;
+    favorite: boolean;
     numbers: CustomFieldsType[];
 }

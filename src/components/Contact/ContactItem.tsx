@@ -8,17 +8,19 @@ import { Button } from 'react-bootstrap';
 import { ContactType } from '../../types/ContactType';
 
 interface Props {
-    favorite: boolean;
     contactData: ContactType;
     handleDeleteClick: (item: ContactType) => void;
     handleEditClick: (item: ContactType) => void;
+    handleFavoriteClick: (id: string) => void;
 }
 
 export const ContactItem = (props: Props) => {
     return (
         <ContactItemStyle onClick={() => console.log('clicked')}>
-            <Button className="favorite">
-                {props.favorite === false ? (
+            <Button
+                className="favorite"
+                onClick={() => props.handleFavoriteClick(props.contactData.id)}>
+                {props.contactData.favorite === false ? (
                     <img src={IconHeartEmpty} alt="heart-empty" />
                 ) : (
                     <img src={IconHeartFull} alt="heart-full" />

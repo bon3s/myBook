@@ -1,4 +1,9 @@
-import { ADD_CONTACT, REMOVE_CONTACT, UPDATE_CONTACT } from './contactsActions';
+import {
+    ADD_CONTACT,
+    REMOVE_CONTACT,
+    UPDATE_CONTACT,
+    UPDATE_FAVORITE,
+} from './contactsActions';
 import { ContactType } from '../types/ContactType';
 import { AnyAction } from 'redux';
 
@@ -28,6 +33,19 @@ const contactsReducer = (state: State = initState, action: AnyAction) => {
                     item.id === action.value.id ? action.value : item
                 ),
             };
+        case UPDATE_FAVORITE:
+            return {
+                ...state,
+                contacts: state.contacts.map(item => {
+                    if (item.id === action.value) {
+                        item.favorite === false
+                            ? (item.favorite = true)
+                            : (item.favorite = false);
+                    }
+                    return item;
+                }),
+            };
+
         default:
             return state;
     }

@@ -83,6 +83,7 @@ export const EditContactScreen = (props: Props) => {
                 name: name,
                 email: email,
                 image: image,
+                favorite: props.itemToEdit.favorite,
                 numbers: toRender,
             };
             props.handleSaveClick(contactItem);

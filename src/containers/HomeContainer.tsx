@@ -5,7 +5,7 @@ import AppState from '../redux/AppState';
 import { ContactType } from '../types/ContactType';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { removeContact } from '../redux/contactsActions';
+import { removeContact, updateFavorite } from '../redux/contactsActions';
 
 interface Props extends RouterProps {
     contacts: ContactType[];
@@ -31,9 +31,14 @@ class HomeContainer extends Component<Props> {
         });
     };
 
+    handleFavoriteClick = (id: string) => {
+        this.props.dispatch(updateFavorite(id));
+    };
+
     public render() {
         return (
             <HomeScreen
+                handleFavoriteClick={this.handleFavoriteClick}
                 handleEditClick={this.handleEditClick}
                 handleDeleteClick={this.handleDeleteClick}
                 contacts={this.props.contacts}

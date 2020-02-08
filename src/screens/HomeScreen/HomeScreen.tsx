@@ -12,6 +12,7 @@ interface Props extends RouterProps {
     contacts: ContactType[];
     handleDeleteClick: (item: ContactType) => void;
     handleEditClick: (item: ContactType) => void;
+    handleFavoriteClick: (id: string) => void;
 }
 
 const HomeScreen = (props: Props) => {
@@ -34,6 +35,9 @@ const HomeScreen = (props: Props) => {
                                             md={6}
                                             sm={12}>
                                             <ContactItem
+                                                handleFavoriteClick={
+                                                    props.handleFavoriteClick
+                                                }
                                                 handleEditClick={
                                                     props.handleEditClick
                                                 }
@@ -42,7 +46,6 @@ const HomeScreen = (props: Props) => {
                                                 }
                                                 key={item.id}
                                                 contactData={item}
-                                                favorite={false}
                                             />
                                         </Col>
                                     );

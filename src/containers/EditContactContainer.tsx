@@ -18,15 +18,18 @@ class EditContactContainer extends Component<Props> {
     handleDeleteClick = (item: ContactType) => {
         window.URL.revokeObjectURL(item.image);
         this.props.dispatch(removeContact(item.id));
-        this.props.history.push('/');
+        this.props.history.push({
+            pathname: '/',
+            state: {},
+        });
     };
 
     handleSaveClick = (contactItem: ContactType) => {
         this.props.dispatch(updateContact(contactItem));
-        // this.props.history.push({
-        //     pathname: '/',
-        //     state: {},
-        // });
+        this.props.history.push({
+            pathname: '/',
+            state: {},
+        });
     };
 
     render() {
