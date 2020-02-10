@@ -12,6 +12,7 @@ interface Props extends RouterProps {
     handleDeleteClick: (item: ContactType) => void;
     handleEditClick: (item: ContactType) => void;
     handleFavoriteClick: (id: string) => void;
+    handleContactClick: (item: ContactType) => void;
 }
 interface State {}
 
@@ -41,6 +42,9 @@ const FavoritesScreen = (props: Props) => {
                                                     }
                                                     handleDeleteClick={
                                                         props.handleDeleteClick
+                                                    }
+                                                    handleContactClick={
+                                                        props.handleContactClick
                                                     }
                                                     key={item.id}
                                                     contactData={item}

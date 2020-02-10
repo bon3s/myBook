@@ -9,12 +9,10 @@ import { removeContact, updateContact } from '../redux/contactsActions';
 
 interface Props extends RouterProps {
     dispatch: Dispatch;
-    itemToRender: ContactType;
+    itemToEdit: ContactType;
 }
 
 class EditContactContainer extends Component<Props> {
-    itemToRender = this.props.history.location.state;
-
     handleDeleteClick = (item: ContactType) => {
         window.URL.revokeObjectURL(item.image);
         this.props.dispatch(removeContact(item.id));
@@ -28,26 +26,23 @@ class EditContactContainer extends Component<Props> {
         this.props.dispatch(updateContact(contactItem));
         this.props.history.push({
             pathname: '/',
-            state: {},
         });
     };
 
     render() {
-        const routeProps: any = this.props.history.location.state || undefined;
-        if (
-            routeProps.itemToEdit !== undefined &&
-            routeProps.itemToEdit !== ''
-        ) {
+        if (this.props.itemToEdit) {
             return (
                 <EditContactScreen
-                    itemToEdit={JSON.parse(routeProps.itemToEdit)}
+                    itemToEdit={this.props.itemToEdit}
                     history={this.props.history}
                     handleSaveClick={this.handleSaveClick}
                     handleDeleteClick={this.handleDeleteClick}
                 />
             );
         } else {
-            this.props.history.push('/');
+            this.props.history.push({
+                pathname: '/',
+            });
             return null;
         }
     }

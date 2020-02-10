@@ -12,11 +12,16 @@ interface Props {
     handleDeleteClick: (item: ContactType) => void;
     handleEditClick: (item: ContactType) => void;
     handleFavoriteClick: (id: string) => void;
+    handleContactClick: (item: ContactType) => void;
 }
 
 export const ContactItem = (props: Props) => {
     return (
-        <ContactItemStyle onClick={() => console.log('clicked')}>
+        <ContactItemStyle
+            onClick={(e: SyntheticEvent) => {
+                e.preventDefault();
+                props.handleContactClick(props.contactData);
+            }}>
             <Button
                 className="favorite"
                 onClick={() => props.handleFavoriteClick(props.contactData.id)}>

@@ -10,20 +10,14 @@ import { Dispatch } from 'redux';
 interface Props extends RouterProps {
     dispatch: Dispatch;
     contacts: ContactType[];
+    handleEditClick: (item: ContactType) => void;
+    handleContactClick: (item: ContactType) => void;
 }
+
 class FavoritesContainer extends Component<Props> {
     handleDeleteClick = (item: ContactType) => {
         window.URL.revokeObjectURL(item.image);
         this.props.dispatch(removeContact(item.id));
-    };
-
-    handleEditClick = (item: ContactType) => {
-        this.props.history.push({
-            pathname: '/editContact',
-            state: {
-                itemToEdit: JSON.stringify(item),
-            },
-        });
     };
 
     handleFavoriteClick = (id: string) => {
@@ -35,8 +29,9 @@ class FavoritesContainer extends Component<Props> {
             <FavoritesScreen
                 contacts={this.props.contacts}
                 handleDeleteClick={this.handleDeleteClick}
-                handleEditClick={this.handleEditClick}
+                handleEditClick={this.props.handleEditClick}
                 handleFavoriteClick={this.handleFavoriteClick}
+                handleContactClick={this.props.handleContactClick}
                 history={this.props.history}
             />
         );

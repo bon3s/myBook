@@ -9,7 +9,7 @@ interface Props extends RouterProps {}
 function App(props: Props) {
     return (
         <main>
-            <Router />
+            <Router history={props.history} />
         </main>
     );
 }

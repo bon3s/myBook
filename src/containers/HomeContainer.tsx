@@ -10,6 +10,8 @@ import { removeContact, updateFavorite } from '../redux/contactsActions';
 interface Props extends RouterProps {
     contacts: ContactType[];
     dispatch: Dispatch;
+    handleEditClick: (item: ContactType) => void;
+    handleContactClick: (item: ContactType) => void;
 }
 
 class HomeContainer extends Component<Props> {
@@ -22,15 +24,6 @@ class HomeContainer extends Component<Props> {
         this.props.dispatch(removeContact(item.id));
     };
 
-    handleEditClick = (item: ContactType) => {
-        this.props.history.push({
-            pathname: '/editContact',
-            state: {
-                itemToEdit: JSON.stringify(item),
-            },
-        });
-    };
-
     handleFavoriteClick = (id: string) => {
         this.props.dispatch(updateFavorite(id));
     };
@@ -39,8 +32,9 @@ class HomeContainer extends Component<Props> {
         return (
             <HomeScreen
                 handleFavoriteClick={this.handleFavoriteClick}
-                handleEditClick={this.handleEditClick}
+                handleEditClick={this.props.handleEditClick}
                 handleDeleteClick={this.handleDeleteClick}
+                handleContactClick={this.props.handleContactClick}
                 contacts={this.props.contacts}
                 history={this.props.history}
             />
