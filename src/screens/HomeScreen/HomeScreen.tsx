@@ -11,9 +11,9 @@ import { ContactType } from '../../types/ContactType';
 interface Props extends RouterProps {
     contacts: ContactType[];
     handleDeleteClick: (item: ContactType) => void;
-    handleEditClick: (item: ContactType) => void;
+    handleEditClick: (id: string) => void;
     handleFavoriteClick: (id: string) => void;
-    handleContactClick: (item: ContactType) => void;
+    handleContactClick: (id: string) => void;
 }
 
 const HomeScreen = (props: Props) => {
@@ -36,6 +36,7 @@ const HomeScreen = (props: Props) => {
                                             md={6}
                                             sm={12}>
                                             <ContactItem
+                                                history={props.history}
                                                 handleFavoriteClick={
                                                     props.handleFavoriteClick
                                                 }

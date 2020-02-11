@@ -18,6 +18,7 @@ const contactsReducer = (state: State = initState, action: AnyAction) => {
     switch (action.type) {
         case ADD_CONTACT:
             return { ...state, contacts: [...state.contacts, action.value] };
+
         case REMOVE_CONTACT:
             const newArray = state.contacts.filter(item =>
                 item.id === action.value ? false : true
@@ -26,6 +27,7 @@ const contactsReducer = (state: State = initState, action: AnyAction) => {
                 ...state,
                 contacts: newArray,
             };
+
         case UPDATE_CONTACT:
             return {
                 ...state,
@@ -33,6 +35,7 @@ const contactsReducer = (state: State = initState, action: AnyAction) => {
                     item.id === action.value.id ? action.value : item
                 ),
             };
+
         case UPDATE_FAVORITE:
             return {
                 ...state,

@@ -10,15 +10,11 @@ import { removeContact, updateFavorite } from '../redux/contactsActions';
 interface Props extends RouterProps {
     contacts: ContactType[];
     dispatch: Dispatch;
-    handleEditClick: (item: ContactType) => void;
-    handleContactClick: (item: ContactType) => void;
+    handleContactClick: (id: string) => void;
+    handleEditClick: (id: string) => void;
 }
 
 class HomeContainer extends Component<Props> {
-    // constructor(props: Props) {
-    //     super(props);
-    // }
-
     handleDeleteClick = (item: ContactType) => {
         window.URL.revokeObjectURL(item.image);
         this.props.dispatch(removeContact(item.id));

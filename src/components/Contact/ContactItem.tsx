@@ -6,13 +6,14 @@ import IconEdit from '../../assets/img/icons/icon_edit.svg';
 import IconDelete from '../../assets/img/icons/icon_delete.svg';
 import { Button } from 'react-bootstrap';
 import { ContactType } from '../../types/ContactType';
+import { RouterProps } from 'react-router';
 
-interface Props {
+interface Props extends RouterProps {
     contactData: ContactType;
     handleDeleteClick: (item: ContactType) => void;
-    handleEditClick: (item: ContactType) => void;
+    handleEditClick: (id: string) => void;
     handleFavoriteClick: (id: string) => void;
-    handleContactClick: (item: ContactType) => void;
+    handleContactClick: (id: string) => void;
 }
 
 export const ContactItem = (props: Props) => {
@@ -20,11 +21,16 @@ export const ContactItem = (props: Props) => {
         <ContactItemStyle
             onClick={(e: SyntheticEvent) => {
                 e.preventDefault();
-                props.handleContactClick(props.contactData);
+                props.handleContactClick(props.contactData.id);
+                props.history.push('/contact');
             }}>
             <Button
                 className="favorite"
-                onClick={() => props.handleFavoriteClick(props.contactData.id)}>
+                onClick={(e: SyntheticEvent) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    props.handleFavoriteClick(props.contactData.id);
+                }}>
                 {props.contactData.favorite === false ? (
                     <img src={IconHeartEmpty} alt="heart-empty" />
                 ) : (
@@ -36,7 +42,9 @@ export const ContactItem = (props: Props) => {
                     className="edit"
                     onClick={(e: SyntheticEvent) => {
                         e.preventDefault();
-                        props.handleEditClick(props.contactData);
+                        e.stopPropagation();
+                        props.handleEditClick(props.contactData.id);
+                        props.history.push('/editContact');
                     }}>
                     <img src={IconEdit} alt="edit" />
                 </Button>
@@ -44,6 +52,7 @@ export const ContactItem = (props: Props) => {
                     className="delete"
                     onClick={(e: SyntheticEvent) => {
                         e.preventDefault();
+                        e.stopPropagation();
                         props.handleDeleteClick(props.contactData);
                     }}>
                     <img src={IconDelete} alt="delete" />

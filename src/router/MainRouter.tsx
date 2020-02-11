@@ -6,63 +6,80 @@ import AddContactContainer from '../containers/AddContactContainer';
 import Error404Container from '../containers/ErrorContainer';
 import EditContactContainer from '../containers/EditContactContainer';
 import ContactContainer from '../containers/ContactContainer';
+import { connect } from 'react-redux';
+import AppState from '../redux/AppState';
 import { ContactType } from '../types/ContactType';
 
-interface Props extends RouterProps {}
+interface Props extends RouterProps {
+    contacts: ContactType[];
+}
 
 const Router = (props: Props) => {
-    let itemForShow: ContactType = {
+    let contactToShow: ContactType = {
         id: '',
         name: '',
         email: '',
-        numbers: [],
-        favorite: false,
         image: '',
+        favorite: false,
+        numbers: [],
     };
 
-    const passItemToShow = (item: ContactType) => {
-        itemForShow = item;
-        return;
+    const handleContactClick = (id: string) => {
+        props.contacts.forEach((item: ContactType) => {
+            if (item.id === id) {
+                contactToShow = item;
+            }
+        });
+    };
+
+    const handleEditClick = (id: string) => {
+        props.contacts.forEach((item: ContactType) => {
+            if (item.id === id) {
+                contactToShow = item;
+            }
+        });
     };
 
     return (
         <Switch>
             <Route
                 path="/"
-                render={(props: Props) => (
+                render={props => (
                     <HomeContainer
-                        {...props}
-                        handleContactClick={passItemToShow}
-                        handleEditClick={passItemToShow}
+                        history={props.history}
+                        handleContactClick={handleContactClick}
+                        handleEditClick={handleEditClick}
                     />
                 )}
                 exact
             />
             <Route
                 path="/contact"
-                render={(props: Props) => (
+                render={props => (
                     <ContactContainer
-                        {...props}
-                        contactToShow={itemForShow}
-                        handleEditClick={passItemToShow}
+                        history={props.history}
+                        contactToShow={contactToShow}
                     />
                 )}
             />
             <Route
                 path="/favorites"
-                render={(props: Props) => (
+                render={props => (
                     <FavoritesContainer
-                        {...props}
-                        handleContactClick={passItemToShow}
-                        handleEditClick={passItemToShow}
+                        history={props.history}
+                        handleContactClick={handleContactClick}
+                        handleEditClick={handleEditClick}
                     />
                 )}
             />
             <Route path="/addContact" component={AddContactContainer} />
             <Route
                 path="/editContact"
-                render={(props: Props) => (
-                    <EditContactContainer {...props} itemToEdit={itemForShow} />
+                render={props => (
+                    <EditContactContainer
+                        history={props.history}
+                        itemToEdit={contactToShow}
+                    />
                 )}
             />
             <Route path="/404" component={Error404Container} />
@@ -70,4 +87,9 @@ const Router = (props: Props) => {
     );
 };
 
-export default Router;
+const mapStateToProps = (state: AppState) => {
+    return {
+        contacts: state.contacts.contacts,
+    };
+};
+export default connect(mapStateToProps)(Router);

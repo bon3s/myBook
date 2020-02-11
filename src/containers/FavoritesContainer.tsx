@@ -10,8 +10,8 @@ import { Dispatch } from 'redux';
 interface Props extends RouterProps {
     dispatch: Dispatch;
     contacts: ContactType[];
-    handleEditClick: (item: ContactType) => void;
-    handleContactClick: (item: ContactType) => void;
+    handleEditClick: (id: string) => void;
+    handleContactClick: (id: string) => void;
 }
 
 class FavoritesContainer extends Component<Props> {

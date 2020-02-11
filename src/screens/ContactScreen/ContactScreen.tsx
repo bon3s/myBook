@@ -10,7 +10,7 @@ import IconHeartFull from '../../assets/img/icons/icon_heart_full.svg';
 import IconEdit from '../../assets/img/icons/icon_edit.svg';
 interface Props extends RouterProps {
     contact: ContactType;
-    handleEditClick: (item: ContactType) => void;
+    handleEditClick: (id: string) => void;
     handleFavoriteClick: (id: string) => void;
 }
 
@@ -67,7 +67,7 @@ export const ContactScreen = (props: Props) => {
                                         onClick={(e: SyntheticEvent) => {
                                             e.preventDefault();
                                             props.handleEditClick(
-                                                props.contact
+                                                props.contact.id
                                             );
                                         }}>
                                         <img src={IconEdit} alt="edit" />

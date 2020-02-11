@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { theme } from '../../Theme/theme';
+
 export const ContactItemStyle = styled.div`
     padding: 22px 17px;
     display: flex;

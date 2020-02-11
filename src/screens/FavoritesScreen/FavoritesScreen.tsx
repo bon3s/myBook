@@ -10,11 +10,10 @@ import { ContactItem } from '../../components/Contact/ContactItem';
 interface Props extends RouterProps {
     contacts: ContactType[];
     handleDeleteClick: (item: ContactType) => void;
-    handleEditClick: (item: ContactType) => void;
+    handleEditClick: (id: string) => void;
     handleFavoriteClick: (id: string) => void;
-    handleContactClick: (item: ContactType) => void;
+    handleContactClick: (id: string) => void;
 }
-interface State {}
 
 const FavoritesScreen = (props: Props) => {
     return (
@@ -34,6 +33,7 @@ const FavoritesScreen = (props: Props) => {
                                                 md={6}
                                                 sm={12}>
                                                 <ContactItem
+                                                    history={props.history}
                                                     handleFavoriteClick={
                                                         props.handleFavoriteClick
                                                     }
