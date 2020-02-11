@@ -9,11 +9,14 @@ import { AnyAction } from 'redux';
 
 export interface State {
     readonly contacts: ContactType[];
+    readonly buffer: ContactType[];
 }
 
 const initState: State = {
     contacts: [],
+    buffer: [],
 };
+
 const contactsReducer = (state: State = initState, action: AnyAction) => {
     switch (action.type) {
         case ADD_CONTACT:

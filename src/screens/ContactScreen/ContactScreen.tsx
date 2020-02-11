@@ -45,11 +45,13 @@ export const ContactScreen = (props: Props) => {
                                 <div className="right-column">
                                     <Button
                                         className="favorite"
-                                        onClick={() =>
+                                        onClick={(e: SyntheticEvent) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
                                             props.handleFavoriteClick(
                                                 props.contact.id
-                                            )
-                                        }>
+                                            );
+                                        }}>
                                         {props.contact.favorite === false ? (
                                             <img
                                                 src={IconHeartEmpty}
@@ -66,6 +68,7 @@ export const ContactScreen = (props: Props) => {
                                         className="edit"
                                         onClick={(e: SyntheticEvent) => {
                                             e.preventDefault();
+                                            e.stopPropagation();
                                             props.handleEditClick(
                                                 props.contact.id
                                             );

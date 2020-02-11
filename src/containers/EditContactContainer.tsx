@@ -30,7 +30,7 @@ class EditContactContainer extends Component<Props> {
     };
 
     render() {
-        if (this.props.itemToEdit) {
+        if (this.props.itemToEdit.id !== '') {
             return (
                 <EditContactScreen
                     itemToEdit={this.props.itemToEdit}

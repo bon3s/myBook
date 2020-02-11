@@ -57,6 +57,7 @@ const Router = (props: Props) => {
                 path="/contact"
                 render={props => (
                     <ContactContainer
+                        handleEditClick={handleEditClick}
                         history={props.history}
                         contactToShow={contactToShow}
                     />
