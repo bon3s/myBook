@@ -1,15 +1,15 @@
-import { createStore } from 'redux';
-import { persistStore } from 'redux-persist';
-import { devToolsEnhancer } from 'redux-devtools-extension';
-import reducer from './redux/index';
+import { createStore, Reducer } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import { composeWithDevTools } from 'redux-devtools-extension';
+import reducer from './redux';
 
-const store = createStore(
-    reducer,
-    undefined,
-    devToolsEnhancer({})
-    // Specify custom devTools options
-);
+const persistConfig = {
+    key: 'root',
+    storage,
+};
 
-const persistor = persistStore(store);
+const persistedReducer: Reducer = persistReducer(persistConfig, reducer);
 
-export default { store, persistor };
+export let store = createStore(persistedReducer, composeWithDevTools());
+export let persistor = persistStore(store);
