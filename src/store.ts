@@ -1,5 +1,15 @@
 import { createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import reducer from './redux';
-const store = createStore(reducer, composeWithDevTools());
-export default store;
+import { persistStore } from 'redux-persist';
+import { devToolsEnhancer } from 'redux-devtools-extension';
+import reducer from './redux/index';
+
+const store = createStore(
+    reducer,
+    undefined,
+    devToolsEnhancer({})
+    // Specify custom devTools options
+);
+
+const persistor = persistStore(store);
+
+export default { store, persistor };
