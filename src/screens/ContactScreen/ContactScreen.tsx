@@ -25,10 +25,14 @@ export const ContactScreen = (props: Props) => {
                                 'col-lg-2 col-md-12 offset-lg-1 p-lg-0 align-items-center'
                             }>
                             <div className="avatar-wrapper">
-                                <img
-                                    src={props.contact.image}
-                                    alt="User selected contact avatar"
-                                />
+                                {props.contact.image !== '' ? (
+                                    <img
+                                        src={props.contact.image}
+                                        alt="User selected contact avatar"
+                                    />
+                                ) : (
+                                    <div></div>
+                                )}
                             </div>
                         </Col>
                         <Col lg={7} md={12}>
@@ -68,14 +72,68 @@ export const ContactScreen = (props: Props) => {
                                         className="edit"
                                         onClick={(e: SyntheticEvent) => {
                                             e.preventDefault();
-                                            e.stopPropagation();
                                             props.handleEditClick(
                                                 props.contact.id
                                             );
+                                            props.history.push('/editContact');
                                         }}>
                                         <img src={IconEdit} alt="edit" />
                                     </Button>
                                 </div>
+                            </div>
+                            <div className="contact-content">
+                                <Container>
+                                    <div className="contact-item">
+                                        <Row>
+                                            <Col md={{ span: 3 }} sm={12}>
+                                                <div className="label email">
+                                                    <i></i>
+                                                    <p>email</p>
+                                                </div>
+                                            </Col>
+                                            <Col md={7} sm={12}>
+                                                <p className="value email">
+                                                    {props.contact.email}
+                                                </p>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                    <div className="contact-item">
+                                        <Row>
+                                            <Col md={{ span: 3 }} sm={12}>
+                                                <div className="label numbers">
+                                                    <i></i>
+                                                    <p>numbers</p>
+                                                </div>
+                                            </Col>
+                                            <Col md={7} sm={12}>
+                                                <ul className="value-list">
+                                                    {props.contact.numbers.map(
+                                                        item => {
+                                                            return (
+                                                                <li
+                                                                    key={
+                                                                        item.id
+                                                                    }>
+                                                                    <p className="label">
+                                                                        {
+                                                                            item.label
+                                                                        }
+                                                                    </p>
+                                                                    <p className="numberValue">
+                                                                        {
+                                                                            item.number
+                                                                        }
+                                                                    </p>
+                                                                </li>
+                                                            );
+                                                        }
+                                                    )}
+                                                </ul>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Container>
                             </div>
                         </Col>
                     </Row>

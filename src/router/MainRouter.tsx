@@ -33,6 +33,8 @@ const Router = (props: Props) => {
     };
 
     const handleEditClick = (id: string) => {
+        console.log(id);
+
         props.contacts.forEach((item: ContactType) => {
             if (item.id === id) {
                 contactToShow = item;
@@ -63,6 +65,7 @@ const Router = (props: Props) => {
                     />
                 )}
             />
+
             <Route
                 path="/favorites"
                 render={props => (
@@ -73,6 +76,7 @@ const Router = (props: Props) => {
                     />
                 )}
             />
+
             <Route path="/addContact" component={AddContactContainer} />
             <Route
                 path="/editContact"

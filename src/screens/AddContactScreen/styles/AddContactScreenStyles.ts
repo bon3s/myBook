@@ -6,6 +6,7 @@ import IconBack from '../../../assets/img/icons/icon_arrow_back.svg';
 import IconPerson from '../../../assets/img/icons/icon_person.svg';
 import IconMail from '../../../assets/img/icons/icon_email.svg';
 import IconPhone from '../../../assets/img/icons/icon_phone.svg';
+import IconRemoveGreen from '../../../assets/img/icons/icon_remove_green.svg';
 import IconRemoveGray from '../../../assets/img/icons/icon_remove_gray.svg';
 import IconAdd from '../../../assets/img/icons/icon_add.svg';
 import { Form } from 'react-bootstrap';
@@ -243,6 +244,16 @@ export const RemoveButton = styled(Button)`
         background-size: cover;
     }
 
+    &.last {
+        border: 1px solid ${theme.colors.primary};
+        i {
+            width: 8px;
+            height: 8px;
+            background: url(${IconRemoveGreen}) no-repeat;
+            background-size: cover;
+        }
+    }
+
     &:hover,
     &:active,
     &:focus {
@@ -311,9 +322,16 @@ export const CustomFormGroup = styled(Form.Group)`
     && {
         border: none !important;
         .multiple-inputs {
-            .form-control {
-                &.number-input {
-                    max-width: 240px;
+            .form-row {
+                .form-control {
+                    &.number-input {
+                        max-width: 240px;
+                    }
+                }
+                &.last {
+                    .form-control {
+                        border-color: ${theme.colors.primary};
+                    }
                 }
             }
             .addMoreInputsWrapper {

@@ -59,7 +59,11 @@ export const ContactItem = (props: Props) => {
                 </Button>
             </div>
             <div className="image-wrapper">
-                <img src={props.contactData.image} alt="" />
+                {props.contactData.image !== '' ? (
+                    <img src={props.contactData.image} alt="user avatar" />
+                ) : (
+                    <div></div>
+                )}
             </div>
             <div className="info-wrapper">
                 <h3>{props.contactData.name}</h3>

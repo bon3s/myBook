@@ -14,13 +14,14 @@ interface Props extends RouterProps {
     handleEditClick: (id: string) => void;
     handleFavoriteClick: (id: string) => void;
     handleContactClick: (id: string) => void;
+    handleSearchInput: (query: string) => void;
 }
 
 const HomeScreen = (props: Props) => {
     return (
         <ScreenWrapper history={props.history}>
             <HomeScreenStyles>
-                <SearchBar />
+                <SearchBar handleSearchInput={props.handleSearchInput} />
                 <div className="itemsGrid">
                     <Container>
                         <Row>

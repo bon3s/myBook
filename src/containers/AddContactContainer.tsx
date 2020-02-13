@@ -6,6 +6,7 @@ import { Dispatch } from 'redux';
 import { addContact } from '../redux/contactsActions';
 import { connect } from 'react-redux';
 import AppState from '../redux/AppState';
+
 interface Props extends RouterProps {
     dispatch: Dispatch;
 }

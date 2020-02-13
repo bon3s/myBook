@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { theme } from '../../../components/Theme/theme';
+import IconEmail from '../../../assets/img/icons/icon_email.svg';
+import IconPhone from '../../../assets/img/icons/icon_phone.svg';
 
 export const ContactScreenStyles = styled.div`
     padding: 60px 0 78px;
@@ -111,6 +113,92 @@ export const ContactScreenStyles = styled.div`
                     background: transparent !important;
                     box-shadow: none !important;
                     outline: 0 !important;
+                }
+            }
+        }
+    }
+    .contact-content {
+        padding: 64px 43px;
+        .contact-item {
+            margin-bottom: 71px;
+            .label {
+                display: flex;
+                align-items: baseline;
+                p {
+                    color: ${theme.colors.primary};
+                    font-family: ${theme.fonts.fontRegular};
+                    font-size: 16px;
+                    font-weight: 700;
+                    line-height: 19px;
+                    text-align: left;
+                    text-transform: lowercase;
+                    padding: 0;
+                    margin: 0 0 0 15px;
+                }
+                &.email {
+                    i {
+                        width: 15px;
+                        height: 10px;
+                        background: url(${IconEmail}) no-repeat;
+                        background-size: cover;
+                        padding: 0;
+                        margin: 0;
+                    }
+                }
+                &.numbers {
+                    i {
+                        width: 15px;
+                        height: 15px;
+                        background: url(${IconPhone}) no-repeat;
+                        background-size: cover;
+                        padding: 0;
+                        margin: 0;
+                    }
+                }
+            }
+            .value {
+                color: ${theme.colors.gray3};
+                font-family: ${theme.fonts.fontRegular};
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 19px;
+                text-align: left;
+                padding: 0;
+                margin: 0;
+            }
+            .value-list {
+                padding: 0;
+                margin: 0;
+                list-style-type: none;
+                li {
+                    display: flex;
+                    align-items: center;
+                    padding: 0;
+                    margin: 0 0 40px 0;
+                    .label {
+                        color: ${theme.colors.gray3};
+                        font-family: ${theme.fonts.fontRegular};
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 17px;
+                        text-align: left;
+                        text-transform: uppercase;
+                        padding: 0;
+                        margin: 0;
+                        min-width: 70px;
+                    }
+                    .numberValue {
+                        color: ${theme.colors.gray3};
+                        font-family: ${theme.fonts.fontRegular};
+                        font-size: 16px;
+                        font-weight: 400;
+                        line-height: 20px;
+                        text-align: left;
+                        text-transform: uppercase;
+                        text-decoration: underline;
+                        padding: 0;
+                        margin: 0 0 0 46px;
+                    }
                 }
             }
         }

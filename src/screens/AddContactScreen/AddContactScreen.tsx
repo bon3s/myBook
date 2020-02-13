@@ -15,6 +15,7 @@ import { theme } from '../../components/Theme/theme';
 import uuid from 'uuid';
 import { ContactType } from '../../types/ContactType';
 import { CustomFieldsType } from '../../types/CustomFieldsType';
+import downscale from 'downscale';
 
 interface Props extends RouterProps {
     handleSaveClick: (item: ContactType) => void;
@@ -31,8 +32,13 @@ export const AddContactScreen = (props: Props) => {
     const [toRender, setToRender] = useState(initialState);
 
     const addCustomInputRow = () => {
-        const newItem = { id: uuid(), label: '', number: '' };
-        setToRender([...toRender, newItem]);
+        if (
+            toRender[toRender.length - 1].label !== '' &&
+            toRender[toRender.length - 1].number !== ''
+        ) {
+            const newItem = { id: uuid(), label: '', number: '' };
+            setToRender([...toRender, newItem]);
+        }
     };
 
     const removeCustomInputRow = (id: string) => {
@@ -50,11 +56,11 @@ export const AddContactScreen = (props: Props) => {
         setToRender(newArr);
     };
 
-    const handleLoadLocalFile = (event: any) => {
-        event.preventDefault();
-        const file = event.target.files[0];
-        const localImageUrl = window.URL.createObjectURL(file);
-        setImage(localImageUrl);
+    const handleLoadLocalFile = async (e: any) => {
+        e.preventDefault();
+        const imageFile = e.target.files[0];
+        const scaledImage = await downscale(imageFile, 180, 0);
+        setImage(scaledImage);
     };
 
     const updateLabel = (index: number) => (e: any) => {
@@ -109,6 +115,7 @@ export const AddContactScreen = (props: Props) => {
                                             className="imageInput"
                                             type="file"
                                             onChange={handleLoadLocalFile}
+                                            accept={'image/*'}
                                         />
                                         <label htmlFor="imageInput">
                                             {image !== '' ? (
@@ -186,7 +193,15 @@ export const AddContactScreen = (props: Props) => {
                                                     ) => (
                                                         <Form.Row
                                                             id={item.id}
-                                                            key={item.id}>
+                                                            key={item.id}
+                                                            className={
+                                                                index !== 0 &&
+                                                                index ===
+                                                                    toRender.length -
+                                                                        1
+                                                                    ? 'last'
+                                                                    : ''
+                                                            }>
                                                             <Col md={6} sm={12}>
                                                                 <Form.Control
                                                                     bsPrefix={
@@ -222,6 +237,15 @@ export const AddContactScreen = (props: Props) => {
                                                             </Col>
                                                             <Col md={1} sm={12}>
                                                                 <RemoveButton
+                                                                    className={
+                                                                        index !==
+                                                                            0 &&
+                                                                        index ===
+                                                                            toRender.length -
+                                                                                1
+                                                                            ? 'last'
+                                                                            : ''
+                                                                    }
                                                                     onClick={() =>
                                                                         removeCustomInputRow(
                                                                             item.id

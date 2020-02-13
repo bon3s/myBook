@@ -35,7 +35,6 @@ class ContactContainer extends Component<Props, State> {
 
     handleFavoriteClick = (id: string) => {
         this.props.dispatch(updateFavorite(id));
-        this.props.handleEditClick(id);
     };
 
     componentDidUpdate(prevState: Props, nextState: Props) {

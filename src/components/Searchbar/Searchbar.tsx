@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState, SyntheticEvent } from 'react';
 import { SearchBarStyles } from './styles/SearchbarStyles';
 import { Container, Row, Form, Col } from 'react-bootstrap';
 
-interface Props {}
+interface Props {
+    handleSearchInput: (query: string) => void;
+}
 
 export const SearchBar = (props: Props) => {
+    const [val, setVal] = useState('');
+
     return (
         <SearchBarStyles>
             <Container>
@@ -13,7 +17,18 @@ export const SearchBar = (props: Props) => {
                         <div className="form-wrapper">
                             <Form>
                                 <Form.Group controlId="search">
-                                    <Form.Control type="search" />
+                                    <Form.Control
+                                        type="text"
+                                        placeholder=""
+                                        value={val}
+                                        onChange={(e: SyntheticEvent) => {
+                                            let element = e.target as HTMLInputElement;
+                                            setVal(element.value);
+                                            props.handleSearchInput(
+                                                element.value
+                                            );
+                                        }}
+                                    />
                                 </Form.Group>
                             </Form>
                         </div>

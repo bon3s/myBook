@@ -13,8 +13,20 @@ interface Props extends RouterProps {
     handleContactClick: (id: string) => void;
     handleEditClick: (id: string) => void;
 }
+interface State {
+    filteredList: ContactType[];
+    query: string;
+}
 
-class HomeContainer extends Component<Props> {
+class HomeContainer extends Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            filteredList: [],
+            query: '',
+        };
+    }
+
     handleDeleteClick = (item: ContactType) => {
         window.URL.revokeObjectURL(item.image);
         this.props.dispatch(removeContact(item.id));
@@ -24,14 +36,39 @@ class HomeContainer extends Component<Props> {
         this.props.dispatch(updateFavorite(id));
     };
 
+    handleSearchInput = (query: string) => {
+        const adaptedQuery = query.toLowerCase();
+
+        const filteredList = this.props.contacts.filter(item => {
+            const lc = item.name.toLowerCase();
+            return lc.includes(adaptedQuery);
+        });
+
+        this.setState({ filteredList: filteredList, query: query });
+    };
+
+    manageContacts = () => {
+        if (this.state.filteredList.length === 0 && this.state.query === '') {
+            return this.props.contacts;
+        } else if (
+            this.state.filteredList.length === 0 &&
+            this.state.query !== ''
+        ) {
+            return this.state.filteredList;
+        } else {
+            return this.state.filteredList;
+        }
+    };
+
     public render() {
         return (
             <HomeScreen
+                handleSearchInput={this.handleSearchInput}
                 handleFavoriteClick={this.handleFavoriteClick}
                 handleEditClick={this.props.handleEditClick}
                 handleDeleteClick={this.handleDeleteClick}
                 handleContactClick={this.props.handleContactClick}
-                contacts={this.props.contacts}
+                contacts={this.manageContacts()}
                 history={this.props.history}
             />
         );
