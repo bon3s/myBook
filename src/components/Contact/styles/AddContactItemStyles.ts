@@ -3,6 +3,7 @@ import { theme } from '../../Theme/theme';
 import { Button } from 'react-bootstrap';
 
 export const AddContactItemStyles = styled(Button)`
+    margin-top: 30px;
     padding: 22px 17px;
     display: flex;
     flex-direction: column;
@@ -16,7 +17,6 @@ export const AddContactItemStyles = styled(Button)`
     outline: none;
     box-shadow: none;
     width: 100%;
-    height: 100%;
     min-height: 150px;
     .content-wrapper {
         display: flex;

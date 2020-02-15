@@ -16,6 +16,10 @@ interface Props extends RouterProps {
 interface State {
     filteredList: ContactType[];
     query: string;
+    modalData: {
+        visible: boolean;
+        id: string;
+    };
 }
 
 class HomeContainer extends Component<Props, State> {
@@ -24,16 +28,49 @@ class HomeContainer extends Component<Props, State> {
         this.state = {
             filteredList: [],
             query: '',
+            modalData: {
+                visible: false,
+                id: '',
+            },
         };
     }
 
     handleDeleteClick = (item: ContactType) => {
-        window.URL.revokeObjectURL(item.image);
-        this.props.dispatch(removeContact(item.id));
+        this.setState({
+            modalData: {
+                visible: true,
+                id: item.id,
+            },
+        });
+
+        // window.URL.revokeObjectURL(item.image);
+        // this.props.dispatch(removeContact(item.id));
+    };
+
+    handleDeleteContact = (id: string) => {
+        this.props.dispatch(removeContact(id));
+        this.setState({
+            modalData: {
+                visible: false,
+                id: '',
+            },
+        });
+        this.props.history.push({
+            pathname: '/',
+        });
     };
 
     handleFavoriteClick = (id: string) => {
         this.props.dispatch(updateFavorite(id));
+    };
+
+    handleModalClose = () => {
+        this.setState({
+            modalData: {
+                visible: false,
+                id: '',
+            },
+        });
     };
 
     handleSearchInput = (query: string) => {
@@ -63,13 +100,17 @@ class HomeContainer extends Component<Props, State> {
     public render() {
         return (
             <HomeScreen
+                history={this.props.history}
+                modalVisible={this.state.modalData.visible}
+                contactDeleteId={this.state.modalData.id}
+                handleDeleteContact={this.handleDeleteContact}
+                handleModalClose={this.handleModalClose}
                 handleSearchInput={this.handleSearchInput}
                 handleFavoriteClick={this.handleFavoriteClick}
                 handleEditClick={this.props.handleEditClick}
                 handleDeleteClick={this.handleDeleteClick}
                 handleContactClick={this.props.handleContactClick}
                 contacts={this.manageContacts()}
-                history={this.props.history}
             />
         );
     }

@@ -8,6 +8,7 @@ import { BackButton } from '../AddContactScreen/styles/AddContactScreenStyles';
 import IconHeartEmpty from '../../assets/img/icons/icon_heart_empty.svg';
 import IconHeartFull from '../../assets/img/icons/icon_heart_full.svg';
 import IconEdit from '../../assets/img/icons/icon_edit.svg';
+
 interface Props extends RouterProps {
     contact: ContactType;
     handleEditClick: (id: string) => void;

@@ -33,8 +33,6 @@ const Router = (props: Props) => {
     };
 
     const handleEditClick = (id: string) => {
-        console.log(id);
-
         props.contacts.forEach((item: ContactType) => {
             if (item.id === id) {
                 contactToShow = item;

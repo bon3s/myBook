@@ -15,6 +15,7 @@ export const AddContactScreenStyles = styled.div`
     padding: 60px 0 78px;
     .upload-wrapper {
         display: flex;
+        flex-direction: column;
         align-content: center;
         justify-content: center;
         width: 100%;

@@ -12,6 +12,7 @@ export const theme = {
         green2: '#2496A2',
         primaryBleached: 'rgba(45, 161, 173, 0.4)',
         gray3bleached: 'rgba(187, 196, 195, 0.3)',
+        validationError: '#FF4940',
     },
     fonts: {
         fontRegular: 'latoregular,sans-serif',

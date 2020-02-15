@@ -6,10 +6,15 @@ import { ContactType } from '../../types/ContactType';
 import { Container, Row, Col } from 'react-bootstrap';
 import { SearchBar } from '../../components/Searchbar/Searchbar';
 import { ContactItem } from '../../components/Contact/ContactItem';
+import DeleteModal from '../../components/DeleteModal/DeleteModal';
 
 interface Props extends RouterProps {
     contacts: ContactType[];
+    modalVisible: boolean;
+    contactDeleteId: string;
     handleDeleteClick: (item: ContactType) => void;
+    handleDeleteContact: (id: string) => void;
+    handleModalClose: () => void;
     handleEditClick: (id: string) => void;
     handleFavoriteClick: (id: string) => void;
     handleContactClick: (id: string) => void;
@@ -63,6 +68,12 @@ const FavoritesScreen = (props: Props) => {
                     </Container>
                 </div>
             </FavoritesScreenStyles>
+            <DeleteModal
+                visible={props.modalVisible}
+                handleModalClose={props.handleModalClose}
+                contactDeleteId={props.contactDeleteId}
+                handleDeleteContact={props.handleDeleteContact}
+            />
         </ScreenWrapper>
     );
 };

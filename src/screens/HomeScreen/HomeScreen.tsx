@@ -7,10 +7,15 @@ import { AddContactItem } from '../../components/Contact/AddContactItem';
 import { SearchBar } from '../../components/Searchbar/Searchbar';
 import { HomeScreenStyles } from './styles/HomeScreenStyles';
 import { ContactType } from '../../types/ContactType';
+import DeleteModal from '../../components/DeleteModal/DeleteModal';
 
 interface Props extends RouterProps {
     contacts: ContactType[];
+    modalVisible: boolean;
+    contactDeleteId: string;
+    handleModalClose: () => void;
     handleDeleteClick: (item: ContactType) => void;
+    handleDeleteContact: (id: string) => void;
     handleEditClick: (id: string) => void;
     handleFavoriteClick: (id: string) => void;
     handleContactClick: (id: string) => void;
@@ -29,7 +34,7 @@ const HomeScreen = (props: Props) => {
                                 <AddContactItem history={props.history} />
                             </Col>
                             {props.contacts ? (
-                                props.contacts.map(item => {
+                                props.contacts.map((item, index) => {
                                     return (
                                         <Col
                                             key={item.id}
@@ -63,6 +68,12 @@ const HomeScreen = (props: Props) => {
                     </Container>
                 </div>
             </HomeScreenStyles>
+            <DeleteModal
+                visible={props.modalVisible}
+                handleModalClose={props.handleModalClose}
+                contactDeleteId={props.contactDeleteId}
+                handleDeleteContact={props.handleDeleteContact}
+            />
         </ScreenWrapper>
     );
 };

@@ -12,13 +12,55 @@ interface Props extends RouterProps {
     itemToEdit: ContactType;
 }
 
-class EditContactContainer extends Component<Props> {
+interface State {
+    modalData: {
+        visible: boolean;
+        id: string;
+    };
+}
+
+class EditContactContainer extends Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            modalData: {
+                visible: false,
+                id: '',
+            },
+        };
+    }
+
     handleDeleteClick = (item: ContactType) => {
-        window.URL.revokeObjectURL(item.image);
-        this.props.dispatch(removeContact(item.id));
+        this.setState({
+            modalData: {
+                visible: true,
+                id: item.id,
+            },
+        });
+
+        // window.URL.revokeObjectURL(item.image);
+        // this.props.dispatch(removeContact(item.id));
+    };
+
+    handleDeleteContact = (id: string) => {
+        this.props.dispatch(removeContact(id));
+        this.setState({
+            modalData: {
+                visible: false,
+                id: '',
+            },
+        });
         this.props.history.push({
             pathname: '/',
-            state: {},
+        });
+    };
+
+    handleModalClose = () => {
+        this.setState({
+            modalData: {
+                visible: false,
+                id: '',
+            },
         });
     };
 
@@ -33,6 +75,10 @@ class EditContactContainer extends Component<Props> {
         if (this.props.itemToEdit.id !== '') {
             return (
                 <EditContactScreen
+                    modalVisible={this.state.modalData.visible}
+                    contactDeleteId={this.state.modalData.id}
+                    handleDeleteContact={this.handleDeleteContact}
+                    handleModalClose={this.handleModalClose}
                     itemToEdit={this.props.itemToEdit}
                     history={this.props.history}
                     handleSaveClick={this.handleSaveClick}

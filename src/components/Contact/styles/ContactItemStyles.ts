@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { theme } from '../../Theme/theme';
 
 export const ContactItemStyle = styled.div`
+    margin-top: 30px;
     padding: 22px 17px;
     display: flex;
     flex-direction: column;
@@ -12,7 +13,7 @@ export const ContactItemStyle = styled.div`
     border-radius: 4px;
     position: relative;
     cursor: pointer;
-    min-height: 100%;
+    min-height: 150px;
 
     .favorite {
         position: absolute;

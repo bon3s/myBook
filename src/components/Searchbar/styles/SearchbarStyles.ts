@@ -3,7 +3,7 @@ import IconSearch from '../../../assets/img/icons/icon_search.svg';
 import { theme } from '../../Theme/theme';
 
 export const SearchBarStyles = styled.div`
-    padding: 59px 0 61px;
+    padding: 59px 0 31px;
     .form-wrapper {
         display: flex;
         justify-content: center;

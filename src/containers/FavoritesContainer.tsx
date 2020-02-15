@@ -17,6 +17,10 @@ interface Props extends RouterProps {
 interface State {
     filteredList: ContactType[];
     query: string;
+    modalData: {
+        visible: boolean;
+        id: string;
+    };
 }
 
 class FavoritesContainer extends Component<Props, State> {
@@ -25,12 +29,33 @@ class FavoritesContainer extends Component<Props, State> {
         this.state = {
             filteredList: [],
             query: '',
+            modalData: {
+                visible: false,
+                id: '',
+            },
         };
     }
 
     handleDeleteClick = (item: ContactType) => {
-        window.URL.revokeObjectURL(item.image);
-        this.props.dispatch(removeContact(item.id));
+        this.setState({
+            modalData: {
+                visible: true,
+                id: item.id,
+            },
+        });
+
+        // window.URL.revokeObjectURL(item.image);
+        // this.props.dispatch(removeContact(item.id));
+    };
+
+    handleDeleteContact = (id: string) => {
+        this.props.dispatch(removeContact(id));
+        this.setState({
+            modalData: {
+                visible: false,
+                id: '',
+            },
+        });
     };
 
     handleFavoriteClick = (id: string) => {
@@ -46,6 +71,15 @@ class FavoritesContainer extends Component<Props, State> {
         });
 
         this.setState({ filteredList: filteredList, query: query });
+    };
+
+    handleModalClose = () => {
+        this.setState({
+            modalData: {
+                visible: false,
+                id: '',
+            },
+        });
     };
 
     manageContacts = () => {
@@ -64,13 +98,17 @@ class FavoritesContainer extends Component<Props, State> {
     render() {
         return (
             <FavoritesScreen
-                contacts={this.manageContacts()}
+                history={this.props.history}
+                modalVisible={this.state.modalData.visible}
+                contactDeleteId={this.state.modalData.id}
+                handleDeleteContact={this.handleDeleteContact}
+                handleModalClose={this.handleModalClose}
                 handleDeleteClick={this.handleDeleteClick}
                 handleEditClick={this.props.handleEditClick}
                 handleFavoriteClick={this.handleFavoriteClick}
                 handleContactClick={this.props.handleContactClick}
                 handleSearchInput={this.handleSearchInput}
-                history={this.props.history}
+                contacts={this.manageContacts()}
             />
         );
     }

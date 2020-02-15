@@ -3,7 +3,7 @@ import { RouterProps } from 'react-router';
 import { Header } from '../components/Header/Header';
 
 interface Props extends RouterProps {
-    children: JSX.Element;
+    children: JSX.Element[] | JSX.Element;
 }
 
 const ScreenWrapper = (props: Props) => {
