@@ -1,6 +1,8 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import DeleteModalStyles from './styles/DeleteModalStyles';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import GenericButton from '../GenericComponents/GenericButton';
+import { theme } from '../Theme/theme';
 
 interface Props {
     visible: boolean;
@@ -18,25 +20,21 @@ const DeleteModal = (props: Props) => {
                 <Modal.Title>Delete</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                Are you sure you want to delete this contact?
+                <p>Are you sure you want to delete this contact?</p>
             </Modal.Body>
             <Modal.Footer>
-                <Button
-                    variant="secondary"
-                    onClick={(e: SyntheticEvent) => {
-                        e.preventDefault();
+                <GenericButton
+                    handleClick={() => {
                         props.handleModalClose();
-                    }}>
-                    Cancel
-                </Button>
-                <Button
-                    variant="primary"
-                    onClick={(e: SyntheticEvent) => {
-                        e.preventDefault();
+                    }}
+                    backgroundColor={theme.colors.gray3}
+                    buttonText={'Cancel'}></GenericButton>
+                <GenericButton
+                    handleClick={() => {
                         props.handleDeleteContact(props.contactDeleteId);
-                    }}>
-                    Delete
-                </Button>
+                    }}
+                    backgroundColor={theme.colors.primary}
+                    buttonText={'Delete'}></GenericButton>
             </Modal.Footer>
         </DeleteModalStyles>
     );
