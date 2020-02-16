@@ -13,6 +13,9 @@ import { Form } from 'react-bootstrap';
 
 export const AddContactScreenStyles = styled.div`
     padding: 60px 0 78px;
+    .form-toolbar-mobile {
+        display: none;
+    }
     .upload-wrapper {
         display: flex;
         flex-direction: column;
@@ -28,7 +31,6 @@ export const AddContactScreenStyles = styled.div`
             padding: 0 0 36px 12px;
             border-bottom: 1px solid ${theme.colors.primary};
         }
-
         .addContactForm {
             .form-group {
                 padding: 18px 0 30px;
@@ -102,6 +104,34 @@ export const AddContactScreenStyles = styled.div`
             }
         }
     }
+    @media only screen and (max-width: 578px) {
+        padding: 0;
+        .form-toolbar-mobile {
+            padding: 13px 29px;
+            border-bottom: 1px solid ${theme.colors.gray3};
+            display: flex;
+            justify-content: space-between;
+        }
+        .upload-wrapper {
+            padding: 23px 0 25px;
+            border-bottom: 1px solid ${theme.colors.primary};
+        }
+        .form-wrapper {
+            padding: 0;
+            .form-toolbar {
+                display: none;
+            }
+            .addContactForm {
+                .form-group {
+                    padding: 18px 0 26px;
+                    input {
+                        margin: 15px 0 0;
+                        max-width: 100%;
+                    }
+                }
+            }
+        }
+    }
 `;
 
 export const ImageUploadButton = styled.div`
@@ -165,10 +195,10 @@ export const ImageUploadButton = styled.div`
                 transform: translate(-50%, -50%);
                 z-index: 3;
 
-                &.hidden {
+                /* &.hidden {
                     opacity: 0;
                     transition: opacity 0.35s ease;
-                }
+                } */
             }
 
             &:focus,
@@ -188,6 +218,16 @@ export const ImageUploadButton = styled.div`
         outline: none !important;
         box-shadow: none !important;
         border: 3px solid ${theme.colors.gray3bleached}!important;
+    }
+    @media only screen and (max-width: 578px) {
+        width: 150px;
+        height: 150px;
+        .input-wrapper {
+            input[type='file'] + label {
+                width: 150px;
+                height: 150px;
+            }
+        }
     }
 `;
 
@@ -353,6 +393,53 @@ export const CustomFormGroup = styled(Form.Group)`
             display: flex;
             align-items: center;
             justify-content: space-between;
+        }
+    }
+    @media only screen and (max-width: 991px) {
+        .multiple-inputs {
+            .form-row {
+                .form-control {
+                    &.number-input {
+                        max-width: 100% !important;
+                    }
+                    &.label-input {
+                        max-width: 100%;
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 578px) {
+        && {
+            .multiple-inputs {
+                .form-row-wrapper {
+                    margin-top: 25px;
+                    .remove-button-wrapper {
+                        display: flex;
+                        flex-direction: column;
+                        flex: 1;
+                        height: 100%;
+                        padding-top: 15px;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .form-control {
+                        &.number-input {
+                            max-width: 100%;
+                        }
+                    }
+
+                    &:first-child {
+                        margin-top: 0;
+                    }
+                }
+                .addMoreInputsWrapper {
+                    margin-top: 40px;
+                }
+            }
+            .form-footer {
+                margin-top: 70px;
+            }
         }
     }
 `;

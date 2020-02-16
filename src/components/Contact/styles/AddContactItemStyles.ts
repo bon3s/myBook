@@ -56,4 +56,20 @@ export const AddContactItemStyles = styled(Button)`
         box-shadow: none !important;
         border: 1px dashed ${theme.colors.primary} !important;
     }
+    @media only screen and (max-width: 578px) {
+        margin-top: 10px;
+        padding: 22px 25px 18px;
+        min-height: auto;
+
+        .content-wrapper {
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            .btn-text {
+                margin: 0 0 0 18px;
+                font-size: 14px;
+                line-height: 17px;
+            }
+        }
+    }
 `;

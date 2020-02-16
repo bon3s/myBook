@@ -24,49 +24,53 @@ export const ContactItem = (props: Props) => {
                 props.handleContactClick(props.contactData.id);
                 props.history.push('/contact');
             }}>
-            <Button
-                className="favorite"
-                onClick={(e: SyntheticEvent) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    props.handleFavoriteClick(props.contactData.id);
-                }}>
-                {props.contactData.favorite === false ? (
-                    <img src={IconHeartEmpty} alt="heart-empty" />
-                ) : (
-                    <img src={IconHeartFull} alt="heart-full" />
-                )}
-            </Button>
-            <div className="edit-wrapper">
+            <div className="contact-info-wrapper">
+                <div className="image-wrapper">
+                    {props.contactData.image !== '' ? (
+                        <img src={props.contactData.image} alt="user avatar" />
+                    ) : (
+                        <div></div>
+                    )}
+                </div>
+                <div className="info-wrapper">
+                    <h3>{props.contactData.name}</h3>
+                </div>
+            </div>
+            <div className="contact-icons-wrapper">
                 <Button
-                    className="edit"
+                    className="favorite"
                     onClick={(e: SyntheticEvent) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        props.handleEditClick(props.contactData.id);
-                        props.history.push('/editContact');
+                        props.handleFavoriteClick(props.contactData.id);
                     }}>
-                    <img src={IconEdit} alt="edit" />
+                    {props.contactData.favorite === false ? (
+                        <img src={IconHeartEmpty} alt="heart-empty" />
+                    ) : (
+                        <img src={IconHeartFull} alt="heart-full" />
+                    )}
                 </Button>
-                <Button
-                    className="delete"
-                    onClick={(e: SyntheticEvent) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        props.handleDeleteClick(props.contactData);
-                    }}>
-                    <img src={IconDelete} alt="delete" />
-                </Button>
-            </div>
-            <div className="image-wrapper">
-                {props.contactData.image !== '' ? (
-                    <img src={props.contactData.image} alt="user avatar" />
-                ) : (
-                    <div></div>
-                )}
-            </div>
-            <div className="info-wrapper">
-                <h3>{props.contactData.name}</h3>
+                <div className="edit-wrapper">
+                    <Button
+                        className="edit"
+                        onClick={(e: SyntheticEvent) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            props.handleEditClick(props.contactData.id);
+                            props.history.push('/editContact');
+                        }}>
+                        <img src={IconEdit} alt="edit" />
+                    </Button>
+                    <Button
+                        className="delete"
+                        onClick={(e: SyntheticEvent) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            props.handleDeleteClick(props.contactData);
+                        }}>
+                        <img src={IconDelete} alt="delete" />
+                    </Button>
+                </div>
             </div>
         </ContactItemStyle>
     );

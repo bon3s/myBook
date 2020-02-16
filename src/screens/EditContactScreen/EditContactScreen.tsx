@@ -17,6 +17,7 @@ import { ContactType } from '../../types/ContactType';
 import { CustomFieldsType } from '../../types/CustomFieldsType';
 import IconDelete from '../../assets/img/icons/icon_delete.svg';
 import ErrorPrompt from '../../components/ValidationError/ErrorPrompt';
+import downscale from 'downscale';
 import validation, {
     ValidationSummaryType,
     validationTypes,
@@ -88,11 +89,11 @@ export const EditContactScreen = (props: Props) => {
         setToRender(newArr);
     };
 
-    const handleLoadLocalFile = (event: any) => {
-        event.preventDefault();
-        const file = event.target.files[0];
-        const localImageUrl = window.URL.createObjectURL(file);
-        setImage(localImageUrl);
+    const handleLoadLocalFile = async (e: any) => {
+        e.preventDefault();
+        const imageFile = e.target.files[0];
+        const scaledImage = await downscale(imageFile, 180, 180);
+        setImage(scaledImage);
     };
 
     const updateLabel = (index: number) => (e: any) => {
@@ -153,6 +154,24 @@ export const EditContactScreen = (props: Props) => {
             <EditContactScreenStyles>
                 <Container>
                     <Row>
+                        <Col bsPrefix={'p-0 col-sm-12 col-12'}>
+                            <div className="form-toolbar-mobile">
+                                <BackButton
+                                    onClick={() => props.history.goBack()}>
+                                    <i></i>
+                                </BackButton>
+                                <Button
+                                    className="delete"
+                                    onClick={(e: SyntheticEvent) => {
+                                        e.preventDefault();
+                                        props.handleDeleteClick(
+                                            props.itemToEdit
+                                        );
+                                    }}>
+                                    <img src={IconDelete} alt="delete" />
+                                </Button>
+                            </div>
+                        </Col>
                         <Col
                             bsPrefix={
                                 'col-lg-2 col-md-12 offset-lg-1 p-lg-0 align-items-center'
@@ -287,7 +306,8 @@ export const EditContactScreen = (props: Props) => {
                                                                 </Col>
                                                                 <Col
                                                                     md={5}
-                                                                    sm={12}>
+                                                                    sm={12}
+                                                                    xs={10}>
                                                                     <Form.Control
                                                                         bsPrefix={
                                                                             'form-control number-input'
@@ -310,15 +330,18 @@ export const EditContactScreen = (props: Props) => {
                                                                 </Col>
                                                                 <Col
                                                                     md={1}
-                                                                    sm={12}>
-                                                                    <RemoveButton
-                                                                        onClick={() =>
-                                                                            removeCustomInputRow(
-                                                                                item.id
-                                                                            )
-                                                                        }>
-                                                                        <i></i>
-                                                                    </RemoveButton>
+                                                                    sm={12}
+                                                                    xs={2}>
+                                                                    <div className="remove-button-wrapper">
+                                                                        <RemoveButton
+                                                                            onClick={() =>
+                                                                                removeCustomInputRow(
+                                                                                    item.id
+                                                                                )
+                                                                            }>
+                                                                            <i></i>
+                                                                        </RemoveButton>
+                                                                    </div>
                                                                 </Col>
                                                             </Form.Row>
                                                             <ErrorPrompt

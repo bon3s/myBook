@@ -43,4 +43,16 @@ export const SearchBarStyles = styled.div`
             }
         }
     }
+    @media only screen and (max-width: 578px) {
+        padding: 24px 0 25px;
+        .form-wrapper {
+            form {
+                .form-group {
+                    .form-control {
+                        height: 50px;
+                    }
+                }
+            }
+        }
+    }
 `;

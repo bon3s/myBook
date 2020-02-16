@@ -23,17 +23,62 @@ export const ContactScreen = (props: Props) => {
                     <Row>
                         <Col
                             bsPrefix={
-                                'col-lg-2 col-md-12 offset-lg-1 p-lg-0 align-items-center'
+                                'col-lg-2 col-md-12 offset-lg-1 p-lg-0 p-sm-0 p-0 align-items-center'
                             }>
-                            <div className="avatar-wrapper">
-                                {props.contact.image !== '' ? (
-                                    <img
-                                        src={props.contact.image}
-                                        alt="User selected contact avatar"
-                                    />
-                                ) : (
-                                    <div></div>
-                                )}
+                            <div className="contact-toolbar-mobile">
+                                <div className="left-column">
+                                    <BackButton
+                                        onClick={() => props.history.goBack()}>
+                                        <i></i>
+                                    </BackButton>
+                                </div>
+                                <div className="right-column">
+                                    <Button
+                                        className="favorite"
+                                        onClick={(e: SyntheticEvent) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            props.handleFavoriteClick(
+                                                props.contact.id
+                                            );
+                                        }}>
+                                        {props.contact.favorite === false ? (
+                                            <img
+                                                src={IconHeartEmpty}
+                                                alt="heart-empty"
+                                            />
+                                        ) : (
+                                            <img
+                                                src={IconHeartFull}
+                                                alt="heart-full"
+                                            />
+                                        )}
+                                    </Button>
+                                    <Button
+                                        className="edit"
+                                        onClick={(e: SyntheticEvent) => {
+                                            e.preventDefault();
+                                            props.handleEditClick(
+                                                props.contact.id
+                                            );
+                                            props.history.push('/editContact');
+                                        }}>
+                                        <img src={IconEdit} alt="edit" />
+                                    </Button>
+                                </div>
+                            </div>
+                            <div className="avatar-wrapper-mobile">
+                                <div className="avatar-wrapper">
+                                    {props.contact.image !== '' ? (
+                                        <img
+                                            src={props.contact.image}
+                                            alt="User selected contact avatar"
+                                        />
+                                    ) : (
+                                        <div></div>
+                                    )}
+                                </div>
+                                <h1>{props.contact.name}</h1>
                             </div>
                         </Col>
                         <Col lg={7} md={12}>

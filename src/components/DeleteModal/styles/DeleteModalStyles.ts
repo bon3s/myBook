@@ -56,6 +56,21 @@ const DeleteModalStyles = styled(Modal)`
             }
         }
     }
+    @media only screen and (max-width: 578px) {
+        && {
+            max-width: 315px;
+            .modal-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+            }
+        }
+    }
+    @media only screen and (max-width: 375px) {
+        && {
+            max-width: 80%;
+        }
+    }
 `;
 
 export default DeleteModalStyles;

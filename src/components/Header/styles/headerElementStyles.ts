@@ -86,6 +86,25 @@ export const HeaderStyle = styled.div`
             }
         }
     }
+    @media only screen and (max-width: 578px) {
+        .navbar {
+            .brand-wrapper {
+                min-height: 50px;
+                .navbar-brand {
+                    width: 148px;
+                    height: 15px;
+                }
+            }
+            .navbar-wrapper {
+                .nav-main {
+                    padding: 16px 0 17px;
+                }
+                &:after {
+                    width: calc(100% - 30px);
+                }
+            }
+        }
+    }
 `;
 
 export const NavItem = styled(Nav.Item)`
@@ -103,5 +122,9 @@ export const NavItem = styled(Nav.Item)`
     cursor: pointer;
     &:last-child {
         border: none;
+    }
+    @media only screen and (max-width: 578px) {
+        font-size: 14px;
+        line-height: 17px;
     }
 `;

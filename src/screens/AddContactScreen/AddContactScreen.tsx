@@ -96,7 +96,7 @@ export const AddContactScreen = (props: Props) => {
     const handleLoadLocalFile = async (e: any) => {
         e.preventDefault();
         const imageFile = e.target.files[0];
-        const scaledImage = await downscale(imageFile, 180, 0);
+        const scaledImage = await downscale(imageFile, 180, 180);
         setImage(scaledImage);
     };
 
@@ -156,9 +156,17 @@ export const AddContactScreen = (props: Props) => {
             <AddContactScreenStyles>
                 <Container>
                     <Row>
+                        <Col bsPrefix={'p-0 col-sm-12 col-12'}>
+                            <div className="form-toolbar-mobile">
+                                <BackButton
+                                    onClick={() => props.history.goBack()}>
+                                    <i></i>
+                                </BackButton>
+                            </div>
+                        </Col>
                         <Col
                             bsPrefix={
-                                'col-lg-2 col-md-12 offset-lg-1 p-lg-0 align-items-center'
+                                'col-lg-2 col-md-12 offset-lg-1 p-lg-0  align-items-center'
                             }>
                             <div className="upload-wrapper">
                                 <ImageUploadButton>
@@ -300,7 +308,8 @@ export const AddContactScreen = (props: Props) => {
                                                                 </Col>
                                                                 <Col
                                                                     md={5}
-                                                                    sm={12}>
+                                                                    sm={11}
+                                                                    xs={10}>
                                                                     <Form.Control
                                                                         bsPrefix={
                                                                             'form-control number-input'
@@ -312,15 +321,13 @@ export const AddContactScreen = (props: Props) => {
                                                                         onChange={updateNumber(
                                                                             index
                                                                         )}
-                                                                        className={
-                                                                            'number-input'
-                                                                        }
                                                                         placeholder="Number"
                                                                     />
                                                                 </Col>
                                                                 <Col
                                                                     md={1}
-                                                                    sm={12}>
+                                                                    sm={1}
+                                                                    xs={1}>
                                                                     <RemoveButton
                                                                         className={
                                                                             index !==

@@ -15,6 +15,9 @@ const DeleteModal = (props: Props) => {
     return (
         <DeleteModalStyles
             show={props.visible}
+            onHide={() => {
+                props.handleModalClose();
+            }}
             aria-labelledby="contained-modal-title-vcenter">
             <Modal.Header>
                 <Modal.Title>Delete</Modal.Title>
