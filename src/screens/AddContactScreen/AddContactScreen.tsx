@@ -1,4 +1,4 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState, SyntheticEvent, useEffect } from 'react';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import {
     AddContactScreenStyles,
@@ -32,24 +32,24 @@ export const AddContactScreen = (props: Props) => {
     const [image, setImage] = useState('');
     const [emailValid, setEmailValid] = useState({
         msg: '',
-        validated: false,
+        valid: false,
     });
 
     const [phoneValid, setPhoneValid] = useState([
         {
             msg: '',
-            validated: false,
+            valid: false,
         },
     ]);
 
     const [nameValid, setNameValid] = useState({
         msg: '',
-        validated: false,
+        valid: false,
     });
 
     const [imageValid, setImageValid] = useState({
         msg: '',
-        validated: false,
+        valid: false,
     });
 
     const initialState: CustomFieldsType[] = [
@@ -57,11 +57,40 @@ export const AddContactScreen = (props: Props) => {
             id: uuid(),
             label: '',
             number: '',
-            validation: { msg: '', validated: false },
         },
     ];
 
     const [toRender, setToRender] = useState(initialState);
+
+    useEffect(() => {
+        let allPhonesValid = false;
+
+        if (phoneValid.length > 0) {
+            allPhonesValid = phoneValid.every((item: ValidationSummaryType) =>
+                item.valid === true ? true : false
+            );
+        } else {
+            allPhonesValid = true;
+        }
+
+        if (
+            allPhonesValid === true &&
+            emailValid.valid === true &&
+            imageValid.valid === true &&
+            nameValid.valid === true
+        ) {
+            const id = uuid();
+            const contactItem = {
+                id: id,
+                name: name,
+                email: email,
+                image: image,
+                favorite: false,
+                numbers: toRender,
+            };
+            props.handleSaveClick(contactItem);
+        }
+    });
 
     const addCustomInputRow = () => {
         if (
@@ -72,7 +101,6 @@ export const AddContactScreen = (props: Props) => {
                 id: uuid(),
                 label: '',
                 number: '',
-                validation: { msg: '', validated: false },
             };
             setToRender([...toRender, newItem]);
         }
@@ -110,45 +138,16 @@ export const AddContactScreen = (props: Props) => {
         const emailValidRes = validation(validationTypes.email, email);
         setEmailValid(emailValidRes);
 
-        toRender.forEach(item => {
-            const phoneValidRes: ValidationSummaryType[] = [];
-            phoneValidRes.push(validation(validationTypes.phone, item.number));
-            item.validation = validation(validationTypes.phone, item.number);
-            setPhoneValid(phoneValidRes);
-        });
+        const phoneValidRes: ValidationSummaryType[] = toRender.map(item =>
+            validation(validationTypes.phone, item.number)
+        );
+        setPhoneValid(phoneValidRes);
 
-        const imageValidated = validation(validationTypes.image, image);
-        setImageValid(imageValidated);
+        const imageValidRes = validation(validationTypes.image, image);
+        setImageValid(imageValidRes);
 
-        const nameValidated = validation(validationTypes.general, name);
-        setNameValid(nameValidated);
-
-        let allPhonesValid = false;
-
-        if (toRender.length > 0) {
-            allPhonesValid = phoneValid.every(item =>
-                item.validated === true ? true : false
-            );
-        } else {
-            allPhonesValid = true;
-        }
-        if (
-            emailValid.validated === true &&
-            allPhonesValid === true &&
-            imageValid.validated === true &&
-            nameValid.validated === true
-        ) {
-            const id = uuid();
-            const contactItem = {
-                id: id,
-                name: name,
-                email: email,
-                image: image,
-                favorite: false,
-                numbers: toRender,
-            };
-            props.handleSaveClick(contactItem);
-        }
+        const nameValidRes = validation(validationTypes.general, name);
+        setNameValid(nameValidRes);
     };
 
     return (
@@ -195,8 +194,16 @@ export const AddContactScreen = (props: Props) => {
                                 </ImageUploadButton>
                             </div>
                             <ErrorPrompt
-                                msg={imageValid.msg}
-                                validated={imageValid.validated}
+                                msg={
+                                    imageValid !== undefined
+                                        ? imageValid.msg
+                                        : ''
+                                }
+                                valid={
+                                    imageValid !== undefined
+                                        ? imageValid.valid
+                                        : true
+                                }
                             />
                         </Col>
                         <Col lg={7} md={12}>
@@ -225,8 +232,16 @@ export const AddContactScreen = (props: Props) => {
                                             }}
                                         />
                                         <ErrorPrompt
-                                            msg={nameValid.msg}
-                                            validated={nameValid.validated}
+                                            msg={
+                                                nameValid !== undefined
+                                                    ? nameValid.msg
+                                                    : ''
+                                            }
+                                            valid={
+                                                nameValid !== undefined
+                                                    ? nameValid.valid
+                                                    : true
+                                            }
                                         />
                                     </Form.Group>
                                     <Form.Group
@@ -246,8 +261,16 @@ export const AddContactScreen = (props: Props) => {
                                             }}
                                         />
                                         <ErrorPrompt
-                                            msg={emailValid.msg}
-                                            validated={emailValid.validated}
+                                            msg={
+                                                emailValid !== undefined
+                                                    ? emailValid.msg
+                                                    : ''
+                                            }
+                                            valid={
+                                                emailValid !== undefined
+                                                    ? emailValid.valid
+                                                    : true
+                                            }
                                         />
                                     </Form.Group>
 
@@ -268,10 +291,6 @@ export const AddContactScreen = (props: Props) => {
                                                             id: string;
                                                             label: string;
                                                             number: string;
-                                                            validation: {
-                                                                msg: string;
-                                                                validated: boolean;
-                                                            };
                                                         },
                                                         index
                                                     ) => (
@@ -349,14 +368,25 @@ export const AddContactScreen = (props: Props) => {
                                                             </Form.Row>
                                                             <ErrorPrompt
                                                                 msg={
-                                                                    item
-                                                                        .validation
-                                                                        .msg
+                                                                    phoneValid[
+                                                                        index
+                                                                    ] !==
+                                                                    undefined
+                                                                        ? phoneValid[
+                                                                              index
+                                                                          ].msg
+                                                                        : ''
                                                                 }
-                                                                validated={
-                                                                    item
-                                                                        .validation
-                                                                        .validated
+                                                                valid={
+                                                                    phoneValid[
+                                                                        index
+                                                                    ] !==
+                                                                    undefined
+                                                                        ? phoneValid[
+                                                                              index
+                                                                          ]
+                                                                              .valid
+                                                                        : true
                                                                 }
                                                             />
                                                         </div>
@@ -365,6 +395,7 @@ export const AddContactScreen = (props: Props) => {
                                             ) : (
                                                 <div></div>
                                             )}
+
                                             <div className="addMoreInputsWrapper">
                                                 <AddButton
                                                     onClick={addCustomInputRow}>

@@ -7,7 +7,7 @@ export enum validationTypes {
 
 export interface ValidationSummaryType {
     msg: string;
-    validated: boolean;
+    valid: boolean;
 }
 
 const validation = (
@@ -16,13 +16,14 @@ const validation = (
 ): ValidationSummaryType => {
     let summary: ValidationSummaryType = {
         msg: '',
-        validated: false,
+        valid: false,
     };
 
     const validateEmail = (value: string) => {
         function emailIsValid(email: string) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
+
         if (
             value !== undefined &&
             value !== '' &&
@@ -32,18 +33,18 @@ const validation = (
             if (emailIsValid(value) === true) {
                 summary = {
                     msg: '',
-                    validated: true,
+                    valid: true,
                 };
             } else {
                 summary = {
                     msg: 'Please enter a valid email format.',
-                    validated: false,
+                    valid: false,
                 };
             }
         } else {
             summary = {
                 msg: 'Please enter an email address',
-                validated: false,
+                valid: false,
             };
         }
     };
@@ -64,18 +65,18 @@ const validation = (
             if (validMobileNumber(value) === true) {
                 summary = {
                     msg: '',
-                    validated: true,
+                    valid: true,
                 };
             } else {
                 summary = {
                     msg: 'Please enter a valid phone number',
-                    validated: false,
+                    valid: false,
                 };
             }
         } else {
             summary = {
                 msg: 'Please enter a phone number',
-                validated: false,
+                valid: false,
             };
         }
     };
@@ -89,13 +90,13 @@ const validation = (
         ) {
             summary = {
                 msg: '',
-                validated: true,
+                valid: true,
             };
         } else {
             summary = {
                 msg:
                     'Field cannot be empty. Please enter a value or remove unnecesarry field.',
-                validated: false,
+                valid: false,
             };
         }
     };
@@ -111,12 +112,12 @@ const validation = (
         ) {
             summary = {
                 msg: '',
-                validated: true,
+                valid: true,
             };
         } else {
             summary = {
                 msg: 'Please upload a photo for this contact',
-                validated: false,
+                valid: false,
             };
         }
     };

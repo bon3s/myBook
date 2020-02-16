@@ -1,4 +1,4 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState, SyntheticEvent, useEffect } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import {
     EditContactScreenStyles,
@@ -40,29 +40,66 @@ export const EditContactScreen = (props: Props) => {
     const [image, setImage] = useState(props.itemToEdit.image);
     const [emailValid, setEmailValid] = useState({
         msg: '',
-        validated: false,
+        valid: false,
     });
+
     const [phoneValid, setPhoneValid] = useState([
         {
             msg: '',
-            validated: false,
+            valid: false,
         },
     ]);
+
+    const [nameValid, setNameValid] = useState({
+        msg: '',
+        valid: false,
+    });
+
+    const [imageValid, setImageValid] = useState({
+        msg: '',
+        valid: false,
+    });
+
     const initialState: CustomFieldsType[] = props.itemToEdit.numbers.map(
         item => {
             return {
                 id: item.id,
                 label: item.label,
                 number: item.number,
-                validation: {
-                    msg: item.validation.msg,
-                    validated: item.validation.validated,
-                },
             };
         }
     );
 
     const [toRender, setToRender] = useState(initialState);
+
+    useEffect(() => {
+        let allPhonesValid = false;
+
+        if (phoneValid.length > 0) {
+            allPhonesValid = phoneValid.every((item: ValidationSummaryType) =>
+                item.valid === true ? true : false
+            );
+        } else {
+            allPhonesValid = true;
+        }
+
+        if (
+            allPhonesValid === true &&
+            emailValid.valid === true &&
+            imageValid.valid === true &&
+            nameValid.valid === true
+        ) {
+            const contactItem = {
+                id: props.itemToEdit.id,
+                name: name,
+                email: email,
+                image: image,
+                favorite: false,
+                numbers: toRender,
+            };
+            props.handleSaveClick(contactItem);
+        }
+    });
 
     const addCustomInputRow = () => {
         const newItem = {
@@ -106,47 +143,16 @@ export const EditContactScreen = (props: Props) => {
         const emailValidRes = validation(validationTypes.email, email);
         setEmailValid(emailValidRes);
 
-        toRender.forEach(item => {
-            const phoneValidRes: ValidationSummaryType[] = [];
-            phoneValidRes.push(validation(validationTypes.phone, item.number));
-            item.validation = validation(validationTypes.phone, item.number);
-            setPhoneValid(phoneValidRes);
-        });
-
-        const allPhonesValid = phoneValid.every(item =>
-            item.validated === true ? true : false
+        const phoneValidRes: ValidationSummaryType[] = toRender.map(item =>
+            validation(validationTypes.phone, item.number)
         );
+        setPhoneValid(phoneValidRes);
 
-        if (emailValid.validated === true && allPhonesValid) {
-            const id = props.itemToEdit.id;
-            const contactItem = {
-                id: id,
-                name: name,
-                email: email,
-                image: image,
-                favorite: props.itemToEdit.favorite,
-                numbers: toRender,
-            };
-            props.handleSaveClick(contactItem);
-        }
-        if (
-            name !== '' &&
-            email !== '' &&
-            toRender.length > 0 &&
-            toRender[0].label !== '' &&
-            toRender[0].number !== ''
-        ) {
-            const id = props.itemToEdit.id;
-            const contactItem = {
-                id: id,
-                name: name,
-                email: email,
-                image: image,
-                favorite: props.itemToEdit.favorite,
-                numbers: toRender,
-            };
-            props.handleSaveClick(contactItem);
-        }
+        const imageValidRes = validation(validationTypes.image, image);
+        setImageValid(imageValidRes);
+
+        const nameValidRes = validation(validationTypes.general, name);
+        setNameValid(nameValidRes);
     };
 
     return (
@@ -272,10 +278,6 @@ export const EditContactScreen = (props: Props) => {
                                                             id: string;
                                                             label: string;
                                                             number: string;
-                                                            validation: {
-                                                                msg: string;
-                                                                validated: boolean;
-                                                            };
                                                         },
                                                         index
                                                     ) => (
@@ -346,14 +348,25 @@ export const EditContactScreen = (props: Props) => {
                                                             </Form.Row>
                                                             <ErrorPrompt
                                                                 msg={
-                                                                    item
-                                                                        .validation
-                                                                        .msg
+                                                                    phoneValid[
+                                                                        index
+                                                                    ] !==
+                                                                    undefined
+                                                                        ? phoneValid[
+                                                                              index
+                                                                          ].msg
+                                                                        : ''
                                                                 }
-                                                                validated={
-                                                                    item
-                                                                        .validation
-                                                                        .validated
+                                                                valid={
+                                                                    phoneValid[
+                                                                        index
+                                                                    ] !==
+                                                                    undefined
+                                                                        ? phoneValid[
+                                                                              index
+                                                                          ]
+                                                                              .valid
+                                                                        : true
                                                                 }
                                                             />
                                                         </div>

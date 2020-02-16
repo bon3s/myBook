@@ -3,7 +3,7 @@ import { ValidationSummaryType } from './validation';
 import { ErrorPromptStyles } from './styles/ErrorPromptStyles';
 
 const ErrorPrompt = (props: ValidationSummaryType): JSX.Element => {
-    if (props.validated === true) {
+    if (props.valid === true) {
         return <div style={{ display: 'none' }}></div>;
     } else {
         return (
