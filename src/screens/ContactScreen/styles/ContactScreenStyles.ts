@@ -202,7 +202,8 @@ export const ContactScreenStyles = styled.div`
                         text-transform: uppercase;
                         padding: 0;
                         margin: 0;
-                        min-width: 70px;
+                        width: 50%;
+                        word-break: break-word;
                     }
                     .numberValue {
                         color: ${theme.colors.gray3};
@@ -215,6 +216,7 @@ export const ContactScreenStyles = styled.div`
                         text-decoration: underline;
                         padding: 0;
                         margin: 0 0 0 46px;
+                        max-width: 50%;
                     }
                 }
             }

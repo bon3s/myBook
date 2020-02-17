@@ -143,6 +143,9 @@ export const ContactItemStyle = styled.div`
         }
     }
     .contact-info-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         .image-wrapper {
             display: flex;
             align-items: center;
@@ -230,6 +233,7 @@ export const ContactItemStyle = styled.div`
         .contact-info-wrapper {
             display: flex;
             align-items: center;
+            flex-direction: row;
             justify-content: flex-start;
             max-width: 50%;
             .image-wrapper {
