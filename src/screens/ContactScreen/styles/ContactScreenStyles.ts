@@ -189,7 +189,7 @@ export const ContactScreenStyles = styled.div`
                 list-style-type: none;
                 li {
                     display: flex;
-                    align-items: center;
+                    align-items: flex-start;
                     padding: 0;
                     margin: 0 0 40px 0;
                     .label {
@@ -220,6 +220,24 @@ export const ContactScreenStyles = styled.div`
             }
         }
     }
+    @media only screen and (max-width: 768px) {
+        .contact-content {
+            .contact-item {
+                .label {
+                    margin-bottom: 18px;
+                }
+                .value-list {
+                    li {
+                        margin-bottom: 29px;
+                        .numberValue {
+                            margin: 0 0 0 58px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     @media only screen and (max-width: 578px) {
         padding: 0;
         .contact-toolbar {

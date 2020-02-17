@@ -123,6 +123,7 @@ export const EditContactScreenStyles = styled.div`
             }
         }
     }
+
     @media only screen and (max-width: 578px) {
         padding: 0;
         .form-toolbar-mobile {
@@ -421,6 +422,22 @@ export const CustomFormGroup = styled(Form.Group)`
             justify-content: space-between;
         }
     }
+    @media only screen and (max-width: 768px) {
+        && {
+            .multiple-inputs {
+                .form-row-wrapper {
+                    .form-control {
+                        &.label-input {
+                            max-width: 100%;
+                        }
+                        &.number-input {
+                            max-width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
     @media only screen and (max-width: 578px) {
         && {
             .multiple-inputs {
@@ -434,11 +451,6 @@ export const CustomFormGroup = styled(Form.Group)`
                         padding-top: 15px;
                         justify-content: center;
                         align-items: center;
-                    }
-                    .form-control {
-                        &.number-input {
-                            max-width: 100%;
-                        }
                     }
 
                     &:first-child {

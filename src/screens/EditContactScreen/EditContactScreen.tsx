@@ -60,7 +60,7 @@ export const EditContactScreen = (props: Props) => {
         valid: false,
     });
 
-    const initialState: CustomFieldsType[] = props.itemToEdit.numbers.map(
+    const initialCustomRowState: CustomFieldsType[] = props.itemToEdit.numbers.map(
         item => {
             return {
                 id: item.id,
@@ -70,7 +70,7 @@ export const EditContactScreen = (props: Props) => {
         }
     );
 
-    const [toRender, setToRender] = useState(initialState);
+    const [toRender, setToRender] = useState(initialCustomRowState);
 
     useEffect(() => {
         let allPhonesValid = false;
@@ -308,7 +308,7 @@ export const EditContactScreen = (props: Props) => {
                                                                 </Col>
                                                                 <Col
                                                                     md={5}
-                                                                    sm={12}
+                                                                    sm={11}
                                                                     xs={10}>
                                                                     <Form.Control
                                                                         bsPrefix={
@@ -332,7 +332,7 @@ export const EditContactScreen = (props: Props) => {
                                                                 </Col>
                                                                 <Col
                                                                     md={1}
-                                                                    sm={12}
+                                                                    sm={1}
                                                                     xs={2}>
                                                                     <div className="remove-button-wrapper">
                                                                         <RemoveButton

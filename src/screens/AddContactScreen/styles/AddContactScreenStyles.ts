@@ -104,6 +104,7 @@ export const AddContactScreenStyles = styled.div`
             }
         }
     }
+
     @media only screen and (max-width: 578px) {
         padding: 0;
         .form-toolbar-mobile {
@@ -404,6 +405,22 @@ export const CustomFormGroup = styled(Form.Group)`
                     }
                     &.label-input {
                         max-width: 100%;
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 768px) {
+        && {
+            .multiple-inputs {
+                .form-row-wrapper {
+                    .form-control {
+                        &.label-input {
+                            max-width: 100%;
+                        }
+                        &.number-input {
+                            max-width: 100%;
+                        }
                     }
                 }
             }

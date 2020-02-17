@@ -52,7 +52,7 @@ export const AddContactScreen = (props: Props) => {
         valid: false,
     });
 
-    const initialState: CustomFieldsType[] = [
+    const initialCustomRowState: CustomFieldsType[] = [
         {
             id: uuid(),
             label: '',
@@ -60,7 +60,7 @@ export const AddContactScreen = (props: Props) => {
         },
     ];
 
-    const [toRender, setToRender] = useState(initialState);
+    const [toRender, setToRender] = useState(initialCustomRowState);
 
     useEffect(() => {
         let allPhonesValid = false;

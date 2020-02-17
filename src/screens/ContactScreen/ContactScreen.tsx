@@ -152,7 +152,7 @@ export const ContactScreen = (props: Props) => {
                                                     <p>numbers</p>
                                                 </div>
                                             </Col>
-                                            <Col md={7} sm={12}>
+                                            <Col md={7} sm={5}>
                                                 <ul className="value-list">
                                                     {props.contact.numbers.map(
                                                         item => {

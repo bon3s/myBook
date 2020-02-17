@@ -178,6 +178,24 @@ export const ContactItemStyle = styled.div`
             }
         }
     }
+    @media only screen and (max-width: 991px) {
+        .contact-icons-wrapper {
+            .edit-wrapper {
+                visibility: initial;
+                opacity: 1;
+            }
+        }
+        &:hover,
+        &:focus,
+        &:active {
+            .contact-icons-wrapper {
+                .edit-wrapper {
+                    visibility: initial;
+                    opacity: 1;
+                }
+            }
+        }
+    }
 
     @media only screen and (max-width: 578px) {
         margin-top: 10px;
