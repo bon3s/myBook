@@ -30,6 +30,9 @@ export const AddContactScreen = (props: Props) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [image, setImage] = useState('');
+
+    const [fieldFilled, setFieldFilled] = useState(true);
+
     const [emailValid, setEmailValid] = useState({
         msg: '',
         valid: false,
@@ -101,8 +104,12 @@ export const AddContactScreen = (props: Props) => {
                 id: uuid(),
                 label: '',
                 number: '',
+                validation: { msg: '', validated: false },
             };
+            setFieldFilled(true);
             setToRender([...toRender, newItem]);
+        } else {
+            setFieldFilled(false);
         }
     };
 
@@ -404,6 +411,10 @@ export const AddContactScreen = (props: Props) => {
                                                     </div>
                                                     <p>Add number</p>
                                                 </AddButton>
+                                                <ErrorPrompt
+                                                    valid={fieldFilled}
+                                                    msg="Please fill out previously added field before adding a new one."
+                                                />
                                             </div>
                                         </div>
                                         <div className="form-footer">

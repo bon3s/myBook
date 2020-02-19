@@ -378,8 +378,8 @@ export const CustomFormGroup = styled(Form.Group)`
             }
             .addMoreInputsWrapper {
                 display: flex;
-                flex-direction: row;
-                align-items: center;
+                flex-direction: column;
+                align-items: flex-start;
                 justify-content: flex-start;
                 margin-top: 45px;
                 .btn-primary {
