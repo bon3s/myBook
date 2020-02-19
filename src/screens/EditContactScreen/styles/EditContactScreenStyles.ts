@@ -397,15 +397,20 @@ export const CustomFormGroup = styled(Form.Group)`
     && {
         border: none !important;
         .multiple-inputs {
-            .form-control {
-                &.number-input {
-                    max-width: 240px;
+            .form-row-wrapper {
+                .form-row {
+                    .form-control {
+                        margin: 22px 0 0 0;
+                        &.number-input {
+                            max-width: 240px;
+                        }
+                    }
                 }
             }
             .addMoreInputsWrapper {
                 display: flex;
-                flex-direction: row;
-                align-items: center;
+                flex-direction: column;
+                align-items: flex-start;
                 justify-content: flex-start;
                 margin-top: 45px;
                 .btn-primary {

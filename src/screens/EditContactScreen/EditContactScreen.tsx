@@ -38,6 +38,7 @@ export const EditContactScreen = (props: Props) => {
     const [name, setName] = useState(props.itemToEdit.name);
     const [email, setEmail] = useState(props.itemToEdit.email);
     const [image, setImage] = useState(props.itemToEdit.image);
+    const [fieldFilled, setFieldFilled] = useState(true);
     const [emailValid, setEmailValid] = useState({
         msg: '',
         valid: false,
@@ -102,13 +103,21 @@ export const EditContactScreen = (props: Props) => {
     });
 
     const addCustomInputRow = () => {
-        const newItem = {
-            id: uuid(),
-            label: '',
-            number: '',
-            validation: { msg: '', validated: false },
-        };
-        setToRender([...toRender, newItem]);
+        if (
+            toRender[toRender.length - 1].label !== '' &&
+            toRender[toRender.length - 1].number !== ''
+        ) {
+            const newItem = {
+                id: uuid(),
+                label: '',
+                number: '',
+                validation: { msg: '', validated: false },
+            };
+            setFieldFilled(true);
+            setToRender([...toRender, newItem]);
+        } else {
+            setFieldFilled(false);
+        }
     };
 
     const removeCustomInputRow = (id: string) => {
@@ -260,6 +269,18 @@ export const EditContactScreen = (props: Props) => {
                                                 setEmail(element.value);
                                             }}
                                         />
+                                        <ErrorPrompt
+                                            msg={
+                                                emailValid !== undefined
+                                                    ? emailValid.msg
+                                                    : ''
+                                            }
+                                            valid={
+                                                emailValid !== undefined
+                                                    ? emailValid.valid
+                                                    : true
+                                            }
+                                        />
                                     </Form.Group>
                                     <CustomFormGroup
                                         id={'addContactNumbersInput'}
@@ -383,6 +404,10 @@ export const EditContactScreen = (props: Props) => {
                                                     </div>
                                                     <p>Add number</p>
                                                 </AddButton>
+                                                <ErrorPrompt
+                                                    valid={fieldFilled}
+                                                    msg="Please fill out previously added field before adding a new one."
+                                                />
                                             </div>
                                         </div>
                                         <div className="form-footer">
