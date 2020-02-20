@@ -130,7 +130,6 @@ export const AddContactScreen = (props: Props) => {
 
     const handleLoadLocalFile = async (e: any) => {
         e.preventDefault();
-        console.log(e.target.files);
         if (e.target.files.length > 0 && e.target.files[0] !== '') {
             const imageFile = e.target.files[0];
             const scaledImage = await downscale(imageFile, 180, 180);
